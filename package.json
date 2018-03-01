@@ -1,6 +1,6 @@
 {
   "name": "mail-link-extractor",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "App to extract link from mails and add them to pocket",
   "engineStrict": true,
   "engines": {
