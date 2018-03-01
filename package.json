@@ -1,0 +1,69 @@
+{
+  "name": "mail-link-extractor",
+  "version": "0.1.0",
+  "description": "App to extract link from mails and add them to pocket",
+  "engineStrict": true,
+  "engines": {
+    "node": ">=8.9"
+  },
+  "main": "./dist/src/index",
+  "typings": "./dist/src/index",
+  "scripts": {
+    "clean": "rm -rf lib",
+    "format": "prettier --write '{src,test}/**/*.ts'",
+    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "prebuild": "npm run clean && npm run format && npm run lint",
+    "build": "tsc --project tsconfig.json --pretty",
+    "build:watch": "tsc --watch --project tsconfig.json --pretty",
+    "pretest": "npm run format && npm run lint && npm run build",
+    "test": "mocha test/**/*.test.ts --exit",
+    "test-only": "mocha test/**/*.test.ts --exit",
+    "test:watch": "mocha --watch --reporter min",
+    "prestart": "npm run build",
+    "start": "nf start web",
+    "prerelease": "npm run build",
+    "release": "standard-version",
+    "deploy": ""
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run test"
+    }
+  },
+  "dependencies": {
+    "@coolgk/base64": "2.0.3",
+    "foreman": "2.0.0",
+    "fs-extra": "5.0.0",
+    "googleapis": "26.0.1",
+    "prompts": "0.1.2",
+    "ramda": "0.25.0",
+    "tslib": "1.9.0"
+  },
+  "devDependencies": {
+    "@types/chai": "4.1.2",
+    "@types/fs-extra": "5.0.0",
+    "@types/mocha": "2.2.48",
+    "@types/node": "9.4.5",
+    "@types/ramda": "0.25.18",
+    "@types/sinon": "4.1.3",
+    "chai": "4.1.2",
+    "husky": "0.15.0-rc.6",
+    "mocha": "5.0.0",
+    "prettier": "1.10.2",
+    "sinon": "4.2.2",
+    "standard-version": "4.3.0",
+    "ts-node": "4.1.0",
+    "tslint": "5.9.1",
+    "typescript": "2.7.1"
+  },
+  "author": "Nicolas Pierre-Charles <pierrecharles.nicolas@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chipp972/mail-link-extractor.git"
+  },
+  "homepage": "https://github.com/chipp972/mail-link-extractor#readme",
+  "bugs": {
+    "url": "https://github.com/chipp972/mail-link-extractor/issues"
+  },
+  "license": "MIT"
+}
