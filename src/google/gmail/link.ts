@@ -38,7 +38,7 @@ const findLinks = (text?: string): string[] => {
     res = res.concat(drop(1, tmp));
     tmp = urlRE.exec(text);
   }
-  return res;
+  return res.map(encodeURI); // encode uri
 };
 
 const findLinksInBody: (obj: MessageData) => string[] = compose(

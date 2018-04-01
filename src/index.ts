@@ -1,9 +1,13 @@
+import bodyParser from 'body-parser';
+import express from 'express';
+import session from 'express-session';
 import { OAuth2Client } from 'google-auth-library';
 import { google } from 'googleapis';
 import { createServer, Server } from 'http';
 import { getAuth } from './google/auth';
 import { findLinksInMessageList } from './google/gmail/link';
 import { getMessageList } from './google/gmail/message';
+import { initPocketAuth } from './pocket/auth';
 
 /**
  * Lists the messages in the user's account.
@@ -74,7 +78,20 @@ const onListening = (server: Server) => () => {
     const links: string[] = await listMessageLinks();
     console.log(links.length);
 
-    const server = createServer();
+    const app = express();
+    const server = createServer(app);
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(
+      session({
+        secret: process.env.EXPRESS_SESSION_SECRET || 'pocket-test-app',
+        resave: true,
+        saveUninitialized: true,
+        cookie: { secure: true },
+      }),
+    );
+
+    initPocketAuth(app);
+
     handleServerError(server);
     process.once('SIGINT', cleanExit());
     process.once('SIGTERM', cleanExit());

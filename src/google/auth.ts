@@ -6,7 +6,10 @@ import { google } from 'googleapis';
 import { join } from 'path';
 import { prompt } from 'prompts';
 
-const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
+const SCOPES = [
+  'https://www.googleapis.com/auth/gmail.readonly',
+  'https://www.googleapis.com/auth/gmail.labels',
+];
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/gmail-nodejs-quickstart.json
 // const TOKEN_PATH = TOKEN_DIR + 'mail-link-extractor.json';
