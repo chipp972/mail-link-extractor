@@ -14,7 +14,7 @@ export const initPocketAuth = (app: Application): void => {
 
   app.get(
     '/auth/pocket',
-    (__, _, next) => {
+    (_, __, next) => {
       const params = {
         redirect_uri: config.redirect_uri,
       };

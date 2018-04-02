@@ -5,6 +5,10 @@ const pocketApi = new Pocket({
   access_token: process.env.POCKET_ACCESS_TOKEN,
 });
 
+/**
+ * save a list of links into a pocket account
+ * @param {string[]} linkList
+ */
 export async function saveLinksToPocket(
   linkList: string[],
 ): Promise<PocketSendResponse> {
