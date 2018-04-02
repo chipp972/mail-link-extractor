@@ -5,9 +5,11 @@ import { OAuth2Client } from 'google-auth-library';
 import { google } from 'googleapis';
 import { createServer, Server } from 'http';
 import { getAuth } from './google/auth';
+import { addLabelsToMessageList } from './google/gmail/labels';
 import { findLinksInMessageList } from './google/gmail/link';
 import { getMessageList } from './google/gmail/message';
-import { initPocketAuth } from './pocket/auth';
+// import { initPocketAuth } from './pocket/auth';
+// import { saveLinksToPocket } from './pocket/link';
 
 /**
  * Lists the messages in the user's account.
@@ -20,9 +22,21 @@ async function listMessageLinks(): Promise<string[]> {
     const gmail = google.gmail({ version: 'v1', auth });
     const messages = await getMessageList({
       gmail,
-      q: 'from:medium|quincy',
+      // q: 'from:medium|quincy',
+      q: 'subject:pocket-mail-test',
       maxResults: 10,
     });
+    // const labels = await listLabels(gmail);
+    // console.log(labels);
+
+    // do an action on all parsed messages (tag for now)
+    const res = await addLabelsToMessageList({
+      gmail,
+      messageIdList: messages.map((msg) => msg.data.id),
+      labels: ['UNREAD'],
+    });
+    console.log(res);
+
     const links: string[] = findLinksInMessageList(messages);
     return links;
   } catch (err) {
@@ -75,9 +89,6 @@ const onListening = (server: Server) => () => {
 
 (async () => {
   try {
-    const links: string[] = await listMessageLinks();
-    console.log(links.length);
-
     const app = express();
     const server = createServer(app);
     app.use(bodyParser.urlencoded({ extended: true }));
@@ -90,12 +101,16 @@ const onListening = (server: Server) => () => {
       }),
     );
 
-    initPocketAuth(app);
-
     handleServerError(server);
     process.once('SIGINT', cleanExit());
     process.once('SIGTERM', cleanExit());
     server.once('listening', onListening(server));
+
+    // initPocketAuth(app);
+    const links: string[] = await listMessageLinks();
+    console.log(links);
+    // const saveRes = await saveLinksToPocket(links);
+    // console.log(saveRes);
 
     server.listen(5000);
   } catch (err) {

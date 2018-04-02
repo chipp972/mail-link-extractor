@@ -63,3 +63,5 @@ lib/
 build/
 .credentials
 dist
+out
+.next

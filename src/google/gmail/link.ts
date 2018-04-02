@@ -38,7 +38,7 @@ const findLinks = (text?: string): string[] => {
     res = res.concat(drop(1, tmp));
     tmp = urlRE.exec(text);
   }
-  return res.map(encodeURI); // encode uri
+  return res.map(encodeURI); // avoid parsing problem for pocket
 };
 
 const findLinksInBody: (obj: MessageData) => string[] = compose(
