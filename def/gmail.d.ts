@@ -25,37 +25,18 @@ declare interface MessagePayload {
 }
 
 declare interface MessageData {
-  status: number;
-  data: {
-    id: string;
-    threadId: string;
-    labelIds: string[];
-    snippet: string;
-    historyId: string;
-    internalDate: string; // epoch time
-    payload: MessagePayload;
-  };
+  id: string;
+  threadId: string;
+  labelIds: string[];
+  snippet: string;
+  historyId: string;
+  internalDate: string; // epoch time
+  payload: MessagePayload;
 }
 
 declare interface MessageListItem {
   id: string;
   threadId: string;
-}
-
-declare interface MessageListResponse {
-  status: number; // http status
-  data: {
-    messages: MessageListItem[];
-    nextPageToken?: string; // if there is another page
-    resultSizeEstimate: number;
-  };
-}
-
-declare interface MessageListParams {
-  gmail: any;
-  q?: string;
-  maxResults?: number;
-  pageToken?: string;
 }
 
 declare interface GmailLabel {

@@ -7,26 +7,30 @@
     "node": ">=8.9"
   },
   "main": "./dist/src/index",
-  "typings": "./dist/src/index",
   "scripts": {
-    "clean": "rm -rf lib",
-    "format": "prettier --write '{src,test}/**/*.ts'",
-    "lint": "tslint -c tslint.json -p tsconfig.json",
-    "prebuild": "npm run clean && npm run format && npm run lint",
-    "build": "tsc --project tsconfig.json --pretty",
+    "clean:back": "rm -rf dist/",
+    "clean:front": "rm -rf out/",
+    "format": "prettier --write '{src,test,pages,def}/**/*.{ts,js}'",
+    "lint:back": "tslint -c tslint.json -p tsconfig.json --fix",
+    "lint:front": "tslint -c tslint.json pages/**/* --fix",
+    "lint": "npm run lint:back && npm run lint:front",
+    "prebuild:front": "npm run clean:front && npm run lint:front",
+    "build:front": "next build && next export",
+    "prebuild:back": "npm run clean:back && npm run lint:back",
+    "build:back": "tsc --project tsconfig.json --pretty",
+    "build": "npm run build:back && npm run build:front",
     "build:watch": "tsc --watch --project tsconfig.json --pretty",
-    "pretest": "npm run format && npm run lint && npm run build",
+    "pretest": "npm run lint:back && npm run build:back",
     "test": "jest --coverage true",
     "test:watch": "jest --watch",
     "prestart": "npm run build",
-    "start": "nf start web,front",
-    "prerelease": "npm run build",
-    "release": "standard-version",
-    "deploy": ""
+    "start": "nf start web",
+    "prerelease": "npm run build && npm run test",
+    "release": "standard-version"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run test"
+      "pre-commit": "npm run format && npm run lint && npm run test"
     }
   },
   "jest": {
@@ -43,45 +47,58 @@
       "node"
     ]
   },
+  "lint-staged": {
+    "*": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.{js,ts}": [
+      "tslint --fix",
+      "git add"
+    ]
+  },
   "dependencies": {
     "@coolgk/base64": "2.0.4",
-    "body-parser": "1.18.2",
+    "cors": "2.8.4",
     "express": "4.16.3",
-    "express-session": "1.15.6",
-    "foreman": "2.0.0",
-    "fs-extra": "5.0.0",
-    "googleapis": "28.0.1",
-    "next": "5.1.0",
+    "express-registry": "0.1.2",
+    "googleapis": "33.0.0",
+    "isomorphic-unfetch": "2.1.1",
+    "localforage": "1.7.2",
+    "mongoose": "5.2.12",
+    "next": "6.1.1",
     "node-getpocket": "1.0.0",
     "pocket-promise": "1.1.0",
-    "prompts": "0.1.8",
     "ramda": "0.25.0",
-    "react": "16.3.0",
-    "react-dom": "16.3.0",
-    "tslib": "1.9.0"
+    "react": "16.4.2",
+    "react-dom": "16.4.2",
+    "react-google-login": "3.2.1",
+    "tslib": "1.9.3",
+    "winston": "3.0.0"
   },
   "devDependencies": {
-    "@types/body-parser": "1.16.8",
-    "@types/chai": "4.1.2",
-    "@types/express": "4.11.1",
-    "@types/express-session": "1.15.8",
-    "@types/fs-extra": "5.0.1",
-    "@types/jest": "^23.3.1",
-    "@types/mocha": "5.0.0",
-    "@types/node": "9.6.1",
-    "@types/ramda": "0.25.21",
-    "@types/sinon": "4.3.0",
-    "chai": "4.1.2",
-    "husky": "0.14.3",
+    "foreman": "3.0.1",
     "jest": "^23.5.0",
-    "mocha": "5.0.5",
-    "prettier": "1.11.1",
-    "sinon": "4.5.0",
-    "standard-version": "4.3.0",
     "ts-jest": "^23.1.4",
-    "ts-node": "5.0.1",
-    "tslint": "5.9.1",
-    "typescript": "2.8.1"
+    "@types/cors": "2.8.4",
+    "@types/jest": "^23.3.1",
+    "@types/express": "4.16.0",
+    "@types/localforage": "0.0.34",
+    "@types/mongoose": "5.2.9",
+    "@types/node": "10.9.4",
+    "@types/ramda": "0.25.37",
+    "@types/react": "16.4.13",
+    "@types/react-dom": "16.0.7",
+    "@types/sinon": "5.0.2",
+    "@types/winston": "2.4.4",
+    "husky": "1.0.0-rc.13",
+    "lint-staged": "7.2.2",
+    "mock-mongoose": "7.3.6",
+    "prettier": "1.14.2",
+    "standard-version": "4.4.0",
+    "ts-node": "7.0.1",
+    "tslint": "5.11.0",
+    "typescript": "3.0.3"
   },
   "author": "Nicolas Pierre-Charles <pierrecharles.nicolas@gmail.com>",
   "repository": {
