@@ -7,7 +7,7 @@ import {
   join,
   map,
   path,
-  pathSatisfies,
+  pathSatisfies
 } from 'ramda';
 
 const getMessagePayload = (obj?: MessageData): MessagePayload | {} =>
@@ -17,12 +17,12 @@ const getMessageParts = (obj?: MessageData): MessagePart[] =>
   path(['data', 'payload', 'parts'], obj) || [];
 
 const getMessageBodyData: (
-  obj?: MessagePayload | MessagePart | any,
+  obj?: MessagePayload | MessagePart | any
 ) => string | undefined = path(['body', 'data']);
 
 const isBodyEmpty: (obj: MessageData) => boolean = compose(
   pathSatisfies(equals(0), ['body', 'size']),
-  getMessagePayload,
+  getMessagePayload
 );
 
 const findLinks = (text?: string): string[] => {
@@ -45,7 +45,7 @@ const findLinksInBody: (obj: MessageData) => string[] = compose(
   findLinks,
   decode,
   getMessageBodyData,
-  getMessagePayload,
+  getMessagePayload
 );
 
 const findLinksInParts: (obj: MessageData) => string[] = compose(
@@ -53,7 +53,7 @@ const findLinksInParts: (obj: MessageData) => string[] = compose(
   join(''),
   map(decode),
   map(getMessageBodyData),
-  getMessageParts,
+  getMessageParts
 );
 
 /**
@@ -73,3 +73,36 @@ export const findLinksInMessage = (obj?: MessageData): string[] => {
 
 export const findLinksInMessageList = (objs: MessageData[]): string[] =>
   flatten<string>(map(findLinksInMessage, objs));
+
+/**
+ * Lists the messages in the user's account.
+ *
+ * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
+ */
+// export async function listMessageLinks(): Promise<string[]> {
+//   try {
+//     const auth: OAuth2Client = await getAuth();
+//     const gmail = google.gmail({ version: 'v1', auth });
+//     const messages = await getMessageList({
+//       gmail,
+//       // q: 'from:medium|quincy',
+//       q: 'subject:pocket-mail-test',
+//       maxResults: 10,
+//     });
+//     // const labels = await listLabels(gmail);
+//     // console.log(labels);
+
+//     // do an action on all parsed messages (tag for now)
+//     const res = await addLabelsToMessageList({
+//       gmail,
+//       messageIdList: messages.map((msg) => msg.data.id),
+//       labels: ['UNREAD'],
+//     });
+//     console.log(res);
+
+//     const links: string[] = findLinksInMessageList(messages);
+//     return links;
+//   } catch (err) {
+//     throw err;
+//   }
+// }

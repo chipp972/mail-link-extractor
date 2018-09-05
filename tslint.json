@@ -1,15 +1,37 @@
 {
   "defaultSeverity": "error",
   "extends": ["tslint:recommended"],
-  "jsRules": {},
-  "rules": {
-    "quotemark": [true, "single", "avoid-escape"],
+  "jsRules": {
+    "quotemark": [
+      true,
+      "single",
+      "avoid-escape",
+      "avoid-template",
+      "jsx-double"
+    ],
     "only-arrow-functions": false,
     "no-console": false,
     "interface-name": false,
     "curly": [true, "ignore-same-line"],
     "object-literal-sort-keys": false,
-    "no-unused-expression": false
+    "no-unused-expression": false,
+    "trailing-comma": false
+  },
+  "rules": {
+    "quotemark": [
+      true,
+      "single",
+      "avoid-escape",
+      "avoid-template",
+      "jsx-double"
+    ],
+    "only-arrow-functions": false,
+    "no-console": false,
+    "interface-name": false,
+    "curly": [true, "ignore-same-line"],
+    "object-literal-sort-keys": false,
+    "no-unused-expression": false,
+    "trailing-comma": false
   },
   "rulesDirectory": []
 }
