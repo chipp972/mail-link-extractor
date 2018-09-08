@@ -62,7 +62,8 @@ tmp/
 lib/
 build/
 .credentials
-dist
+dist/
 out
 .next
 .vscode
+.sonarlint

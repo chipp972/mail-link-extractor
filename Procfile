@@ -1,2 +1,2 @@
-web: node dist/src/index.js
-front: next
+api: node dist/index.js
+web: next start

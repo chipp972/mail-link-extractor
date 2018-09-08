@@ -11,7 +11,7 @@ export default function getExpressMiddlewares(): RouterObject[] {
     }),
     express.json(),
     express.urlencoded({ extended: true }),
-    express.static(join(__dirname, '../../../out'))
+    express.static(join(__dirname, '../static'))
   ].map((router) => ({ router }));
 
   return mw;

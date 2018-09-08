@@ -2,6 +2,8 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7e45d0d381d543ef9f32a172531841f2)](https://www.codacy.com/app/pierrecharles.nicolas/mail-link-extractor?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=chipp972/mail-link-extractor&amp;utm_campaign=Badge_Grade)
 
+[![CircleCI](https://circleci.com/gh/chipp972/mail-link-extractor.svg?style=svg)](https://circleci.com/gh/chipp972/mail-link-extractor)
+
 ## Description
 
 Extract the links in your mails and send them in your pocket app.
