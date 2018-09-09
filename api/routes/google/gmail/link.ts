@@ -13,7 +13,9 @@ const isBodyEmpty: (obj: MessageData) => boolean = compose(
 );
 
 const findLinks = (text?: string): string[] => {
-  if (!text) return [];
+  if (!text) {
+    return [];
+  }
   // prettier-ignore
   const urlRE = RegExp(
     'a href\=\"(https?\:\/\/[a-z0-9\.\/\@\?\=\\-\&\;\#\!\$\%\*\_\+\n]+)\"',
@@ -51,7 +53,9 @@ const findLinksInParts: (obj: MessageData) => string[] = compose(
  */
 export const findLinksInMessage = (obj?: MessageData): string[] => {
   try {
-    if (!obj) return [];
+    if (!obj) {
+      return [];
+    }
     return isBodyEmpty(obj) ? findLinksInParts(obj) : findLinksInBody(obj);
   } catch (err) {
     throw err;
