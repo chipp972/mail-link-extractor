@@ -14,20 +14,17 @@ export function initPocketAuthModel(): Model<PocketAuth> {
   const PocketAuthSchema: Schema = new Schema({
     requestToken: {
       type: String,
-      default: 'no-token-yet'
+      default: 'no-token-yet',
     },
     createdAt: {
       type: Date,
       default: Date.now(),
-      index: { expires: 60 * 1 }
-    }
+      index: { expires: 60 * 1 },
+    },
   });
 
   const { mongoose } = registry.getServices();
-  const model: Model<PocketAuth> = mongoose.model(
-    'PocketAuth',
-    PocketAuthSchema
-  );
+  const model: Model<PocketAuth> = mongoose.model('PocketAuth', PocketAuthSchema);
   registry.registerModule(model, 'PocketAuth');
   return model;
 }

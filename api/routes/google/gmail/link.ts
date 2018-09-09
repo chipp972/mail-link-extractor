@@ -1,28 +1,15 @@
 import { decode } from '@coolgk/base64';
-import {
-  compose,
-  drop,
-  equals,
-  flatten,
-  join,
-  map,
-  path,
-  pathSatisfies
-} from 'ramda';
+import { compose, drop, equals, flatten, join, map, path, pathSatisfies } from 'ramda';
 
-const getMessagePayload = (obj?: MessageData): MessagePayload | {} =>
-  path(['data', 'payload'])(obj) || {};
+const getMessagePayload = (obj?: MessageData): MessagePayload | {} => path(['data', 'payload'])(obj) || {};
 
-const getMessageParts = (obj?: MessageData): MessagePart[] =>
-  path(['data', 'payload', 'parts'], obj) || [];
+const getMessageParts = (obj?: MessageData): MessagePart[] => path(['data', 'payload', 'parts'], obj) || [];
 
-const getMessageBodyData: (
-  obj?: MessagePayload | MessagePart | any
-) => string | undefined = path(['body', 'data']);
+const getMessageBodyData: (obj?: MessagePayload | MessagePart | any) => string | undefined = path(['body', 'data']);
 
 const isBodyEmpty: (obj: MessageData) => boolean = compose(
   pathSatisfies(equals(0), ['body', 'size']),
-  getMessagePayload
+  getMessagePayload,
 );
 
 const findLinks = (text?: string): string[] => {
@@ -45,7 +32,7 @@ const findLinksInBody: (obj: MessageData) => string[] = compose(
   findLinks,
   decode,
   getMessageBodyData,
-  getMessagePayload
+  getMessagePayload,
 );
 
 const findLinksInParts: (obj: MessageData) => string[] = compose(
@@ -53,7 +40,7 @@ const findLinksInParts: (obj: MessageData) => string[] = compose(
   join(''),
   map(decode),
   map(getMessageBodyData),
-  getMessageParts
+  getMessageParts,
 );
 
 /**
@@ -71,8 +58,7 @@ export const findLinksInMessage = (obj?: MessageData): string[] => {
   }
 };
 
-export const findLinksInMessageList = (objs: MessageData[]): string[] =>
-  flatten<string>(map(findLinksInMessage, objs));
+export const findLinksInMessageList = (objs: MessageData[]): string[] => flatten<string>(map(findLinksInMessage, objs));
 
 /**
  * Lists the messages in the user's account.

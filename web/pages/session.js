@@ -6,11 +6,8 @@ import fetch from 'isomorphic-unfetch';
 class SessionTest extends React.Component {
   constructor(props) {
     super(props);
-    const { result, error } = props;
-    this.state = {
-      result,
-      error
-    };
+    const { result } = props;
+    this.state = { result };
     this.fetchData = this.fetchData.bind(this);
   }
 
@@ -20,8 +17,8 @@ class SessionTest extends React.Component {
         method: 'GET',
         headers: {
           'X-Requested-With': 'XMLHttpRequest',
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
       });
       const result = await raw.json();
       this.setState({ result });
@@ -51,17 +48,13 @@ class SessionTest extends React.Component {
 
 SessionTest.defaultProps = {
   result: { success: false },
-  error: undefined
 };
 
 SessionTest.propTypes = {
   result: PropTypes.shape({
     success: PropTypes.bool,
-    data: PropTypes.string
+    data: PropTypes.string,
   }),
-  error: PropTypes.shape({
-    message: PropTypes.string
-  })
 };
 
 export default SessionTest;

@@ -4,9 +4,7 @@ import { gmail_v1, google } from 'googleapis';
 const gmail: gmail_v1.Gmail = google.gmail({ version: 'v1' });
 
 export const getMessage = (auth: OAuth2Client) => async (messageId: string) =>
-  gmail.users.messages
-    .get({ id: messageId, userId: 'me', auth })
-    .then((res) => res.data);
+  gmail.users.messages.get({ id: messageId, userId: 'me', auth }).then((res) => res.data);
 
 export interface MessageListParams {
   auth: OAuth2Client;
@@ -19,7 +17,7 @@ export const getMessageList = ({
   auth,
   q = '*',
   maxResults = 2,
-  pageToken
+  pageToken,
 }: {
   auth: OAuth2Client;
   q: string;
@@ -33,17 +31,14 @@ export const getMessageList = ({
         maxResults,
         pageToken,
         q,
-        auth
+        auth,
       })
       .then(async (response) => {
         const getGmailMessage = getMessage(auth);
         const messages = response.data.messages || [];
         try {
           const messagesData = await Promise.all(
-            messages.map(
-              ({ id }) =>
-                id ? getGmailMessage(id) : Promise.resolve(undefined)
-            )
+            messages.map(({ id }) => (id ? getGmailMessage(id) : Promise.resolve(undefined))),
           );
           resolve(messagesData);
         } catch (err) {

@@ -83,13 +83,7 @@ declare interface AddAction {
 }
 
 declare interface OtherAction {
-  action:
-    | 'archive'
-    | 'readd'
-    | 'favorite'
-    | 'unfavorite'
-    | 'delete'
-    | 'tags_clear';
+  action: 'archive' | 'readd' | 'favorite' | 'unfavorite' | 'delete' | 'tags_clear';
   item_id: number; // The id of the item to perform the action on
   time?: number; // The time the action occurred
 }
@@ -108,11 +102,7 @@ declare interface TagRenameAction {
   time?: number; // The time the action occurred
 }
 
-declare type PocketAction =
-  | AddAction
-  | OtherAction
-  | TagsAction
-  | TagRenameAction;
+declare type PocketAction = AddAction | OtherAction | TagsAction | TagRenameAction;
 
 declare interface PocketSendOptions {
   actions: PocketAction[];

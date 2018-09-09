@@ -7,11 +7,11 @@ export default function getExpressMiddlewares(): RouterObject[] {
   const mw: any[] = [
     cors({
       origin: 'http://localhost:5000',
-      optionsSuccessStatus: 200
+      optionsSuccessStatus: 200,
     }),
     express.json(),
     express.urlencoded({ extended: true }),
-    express.static(join(__dirname, '../static'))
+    express.static(join(__dirname, '../static')),
   ].map((router) => ({ router }));
 
   return mw;

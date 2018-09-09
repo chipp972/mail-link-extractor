@@ -5,14 +5,7 @@ import PocketAuth, { testPocketAuth } from './component/pocket-auth';
 import { retrieveState, updateState } from './utils/persistence';
 
 export default class Home extends React.Component {
-  static async getInitialProps({
-    pathname,
-    asPath,
-    jsonPageRes,
-    req,
-    res,
-    err
-  }) {
+  static async getInitialProps({ pathname, asPath, jsonPageRes, req, res, err }) {
     console.log(pathname, asPath, jsonPageRes, res, err, req);
     // const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
     // return { userAgent };
@@ -32,7 +25,7 @@ export default class Home extends React.Component {
       isPocketLoggedIn: false,
       pocketRequestId: null,
       // pocketUserId: '',
-      pocketUsername: ''
+      pocketUsername: '',
     };
     this.onGoogleLogin = this.onGoogleLogin.bind(this);
     this.onGoogleLogout = this.onGoogleLogout.bind(this);
@@ -50,7 +43,7 @@ export default class Home extends React.Component {
       _id,
       isGoogleLoggedIn: true,
       googleEmail: email,
-      googleExpiryDate: expiryDate
+      googleExpiryDate: expiryDate,
     };
     this.setState(stateUpdate, () => updateState(stateUpdate));
   }
@@ -60,7 +53,7 @@ export default class Home extends React.Component {
       _id: null,
       isGoogleLoggedIn: false,
       googleEmail: null,
-      googleExpiryDate: null
+      googleExpiryDate: null,
     };
     this.setState(stateUpdate, () => updateState(stateUpdate));
   }
@@ -75,7 +68,7 @@ export default class Home extends React.Component {
       pocketRequestId: null,
       pocketUserId: _id,
       pocketUsername: username,
-      isPocketLoggedIn: true
+      isPocketLoggedIn: true,
     };
     this.setState(stateUpdate, () => updateState(stateUpdate));
   }
@@ -85,7 +78,7 @@ export default class Home extends React.Component {
     const stateUpdate = {
       pocketUserId: null,
       pocketUsername: null,
-      isPocketLoggedIn: false
+      isPocketLoggedIn: false,
     };
     this.setState(stateUpdate, () => updateState(stateUpdate));
   }
@@ -107,22 +100,15 @@ export default class Home extends React.Component {
   }
 
   render() {
-    const {
-      error,
-      googleEmail,
-      isGoogleLoggedIn,
-      isPocketLoggedIn,
-      pocketUsername
-    } = this.state;
+    const { error, googleEmail, isGoogleLoggedIn, isPocketLoggedIn, pocketUsername } = this.state;
     return (
       <div>
         <h1
           style={{
             boder: '1px solid black',
             padding: '1rem',
-            textAlign: 'center'
-          }}
-        >
+            textAlign: 'center',
+          }}>
           Mail Link Extractor
         </h1>
         <h2>Google Authentication</h2>

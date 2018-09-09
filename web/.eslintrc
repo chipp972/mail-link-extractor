@@ -8,6 +8,10 @@
   },
   "rules": {
     "react/jsx-filename-extension": "off",
-    "no-confusing-arrow": "off"
+    "no-confusing-arrow": "off",
+    "implicit-arrow-linebreak": "off",
+    "object-curly-newline": "off",
+    "arrow-parens": ["error", "always"],
+    "react/jsx-closing-bracket-location": "off"
   }
 }

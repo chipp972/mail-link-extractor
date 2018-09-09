@@ -21,27 +21,25 @@ export const getPocketAuthRoutes = (): HandlerObject[] => {
 
   function getRequestToken(uri: string): Promise<string> {
     return new Promise((resolve, reject) =>
-      pocket.getRequestToken(
-        { redirect_uri: uri },
-        (err: Error, _: any, body: any) => {
-          if (err) return reject(err);
-          const json = JSON.parse(body);
-          resolve(json.code);
+      pocket.getRequestToken({ redirect_uri: uri }, (err: Error, _: any, body: any) => {
+        if (err) {
+          return reject(err);
         }
-      )
+        const json = JSON.parse(body);
+        resolve(json.code);
+      }),
     );
   }
 
   function getAccessToken(requestToken: string): Promise<AccessTokenResponse> {
     return new Promise(async (resolve, reject) => {
-      pocket.getAccessToken(
-        { request_token: requestToken },
-        (err: Error, _: any, body: any) => {
-          if (err) return reject(err);
-          const json = JSON.parse(body);
-          resolve(json);
+      pocket.getAccessToken({ request_token: requestToken }, (err: Error, _: any, body: any) => {
+        if (err) {
+          return reject(err);
         }
-      );
+        const json = JSON.parse(body);
+        resolve(json);
+      });
     });
   }
 
@@ -52,22 +50,20 @@ export const getPocketAuthRoutes = (): HandlerObject[] => {
       handler: async (_: any, res: any) => {
         try {
           const auth = await PocketAuthModel.create({});
-          const code = await getRequestToken(
-            `${env.pocket.redirect_uri}${auth._id}`
-          );
+          const code = await getRequestToken(`${env.pocket.redirect_uri}${auth._id}`);
           const url = pocket.getAuthorizeURL({
             ...env.pocket,
-            request_token: code
+            request_token: code,
           });
           await auth.update({ requestToken: code });
           return successResponse(res, {
             pocketRequestId: auth._id,
-            url: `${url}${auth._id}`
+            url: `${url}${auth._id}`,
           });
         } catch (err) {
           return errorResponse(res, err);
         }
-      }
+      },
     },
     {
       method: 'get',
@@ -76,14 +72,9 @@ export const getPocketAuthRoutes = (): HandlerObject[] => {
         try {
           const auth = await PocketAuthModel.findById(req.params.id || '');
           if (!auth) {
-            return errorResponse(
-              res,
-              new Error('No corresponding pocket auth request')
-            );
+            return errorResponse(res, new Error('No corresponding pocket auth request'));
           }
-          const { username, access_token } = await getAccessToken(
-            auth.requestToken
-          );
+          const { username, access_token } = await getAccessToken(auth.requestToken);
           // FIXME: use a user model with google account to have a mail adress
           // to send passwordless authentication on subsequent auth
           const user = await PocketUserModel.findOneAndUpdate(
@@ -91,16 +82,16 @@ export const getPocketAuthRoutes = (): HandlerObject[] => {
             {
               username,
               accessToken: access_token,
-              requestId: req.params.id
+              requestId: req.params.id,
             },
-            { upsert: true, new: true }
+            { upsert: true, new: true },
           );
           console.log(JSON.stringify(user), 'user');
           return res.redirect('/');
         } catch (err) {
           return errorResponse(res, err);
         }
-      }
+      },
     },
     {
       method: 'get',
@@ -108,18 +99,18 @@ export const getPocketAuthRoutes = (): HandlerObject[] => {
       handler: async (req: any, res: any) => {
         try {
           const user = (await PocketUserModel.findOne({
-            requestId: req.params.id
+            requestId: req.params.id,
           })) || { _id: null, username: '' };
           console.log(JSON.stringify(user), 'user');
           return successResponse(res, {
             _id: user._id,
-            username: user.username
+            username: user.username,
           });
         } catch (err) {
           return errorResponse(res, err);
         }
-      }
-    }
+      },
+    },
   ];
 };
 
@@ -132,9 +123,11 @@ export async function getPocketAPI(username: string) {
   const { env } = registry.getConfig();
   const PocketUserModel = registry.getModule('PocketUser') as Model<PocketUser>;
   const user = await PocketUserModel.findOne({ username });
-  if (!user) throw new Error(`No user with username ${username} found`);
+  if (!user) {
+    throw new Error(`No user with username ${username} found`);
+  }
   return new Pocket({
     consumer_key: env.pocket.consumer_key,
-    access_token: user.accessToken || ''
+    access_token: user.accessToken || '',
   });
 }

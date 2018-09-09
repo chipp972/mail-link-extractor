@@ -17,8 +17,8 @@ export function getPocketLinkRoutes() {
         } catch (err) {
           return errorResponse(res, err);
         }
-      }
-    }
+      },
+    },
   ];
   return linkRoutes;
 }

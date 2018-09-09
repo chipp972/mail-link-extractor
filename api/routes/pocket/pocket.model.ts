@@ -15,14 +15,11 @@ export function initPocketUserModel(): Model<PocketUser> {
   const PocketUserSchema: Schema = new Schema({
     username: String,
     accessToken: String,
-    requestId: String
+    requestId: String,
   });
 
   const { mongoose } = registry.getServices();
-  const model: Model<PocketUser> = mongoose.model(
-    'PocketUser',
-    PocketUserSchema
-  );
+  const model: Model<PocketUser> = mongoose.model('PocketUser', PocketUserSchema);
   registry.registerModule(model, 'PocketUser');
   return model;
 }

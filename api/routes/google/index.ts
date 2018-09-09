@@ -31,19 +31,19 @@ export function initGoogleRoutes(): HandlerObject[] {
               accessToken: tokens.access_token,
               refreshToken: tokens.refresh_token,
               expiryDate: tokens.expiry_date,
-              tokenType: tokens.token_type
+              tokenType: tokens.token_type,
             },
-            { upsert: true, new: true }
+            { upsert: true, new: true },
           );
           successResponse(res, {
             _id: user._id,
             email: user.email,
-            expiryDate: user.expiryDate
+            expiryDate: user.expiryDate,
           });
         } catch (error) {
           errorResponse(res, error);
         }
-      }
+      },
     },
     {
       method: 'get',
@@ -54,7 +54,7 @@ export function initGoogleRoutes(): HandlerObject[] {
         const session = req.session;
         console.log(req.session.id);
         return successResponse(res, { env, users, session });
-      }
-    }
+      },
+    },
   ];
 }

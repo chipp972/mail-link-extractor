@@ -24,13 +24,13 @@ export function initPocketRoutes(): HandlerObject[] {
           const pocketApi = await getPocketAPI(req.body.pocketUsername);
           const data = await pocketApi.get({
             detailType: 'simple',
-            count: 10
+            count: 10,
           });
           return successResponse(res, data);
         } catch (error) {
           return errorResponse(res, error);
         }
-      }
-    }
+      },
+    },
   ]);
 }

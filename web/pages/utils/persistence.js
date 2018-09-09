@@ -5,7 +5,7 @@ store.config({
   name: 'mail-link-extractor',
   version: 1.0,
   storeName: 'state',
-  description: 'react app state'
+  description: 'react app state',
 });
 
 export async function clearState() {

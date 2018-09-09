@@ -10,7 +10,7 @@ export async function getUserInfos(credentials: Credentials) {
 
     const oauth2: oauth2_v2.Oauth2 = google.oauth2({
       version: 'v2',
-      auth: googleAuth
+      auth: googleAuth,
     });
     const res = await oauth2.userinfo.get();
     return res.data;

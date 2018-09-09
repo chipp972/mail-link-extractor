@@ -9,7 +9,7 @@ export default function initGoogleServices(): OAuth2Client {
   const oauth2client = new google.auth.OAuth2(
     env.google.auth.clientId,
     env.google.auth.clientSecret,
-    env.google.auth.redirectUrl
+    env.google.auth.redirectUrl,
   );
 
   // const GoogleUserModel = registry.getModule('GoogleUser') as GoogleUser;

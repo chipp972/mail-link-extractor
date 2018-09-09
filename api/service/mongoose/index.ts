@@ -15,14 +15,11 @@ export default async function init(): Promise<Connection> {
     promiseLibrary: global.Promise,
     poolSize: env.database.mongoPoolSize,
     autoReconnect: env.isProd,
-    useNewUrlParser: true
+    useNewUrlParser: true,
   };
 
   try {
-    const db: Connection = await mongoose.createConnection(
-      env.database.mongodbUri,
-      options
-    );
+    const db: Connection = await mongoose.createConnection(env.database.mongodbUri, options);
     return db;
   } catch (err) {
     if (env.isProd) {
@@ -32,10 +29,7 @@ export default async function init(): Promise<Connection> {
     // Use mockgoose to mock the data store
     try {
       logger.debug('Using Mockgoose');
-      const mockedDb: Connection = await initMockgoose(
-        env.database.mongodbUri,
-        options
-      );
+      const mockedDb: Connection = await initMockgoose(env.database.mongodbUri, options);
       return mockedDb;
     } catch (err) {
       logger.error(err, 'mockgoose connexion');

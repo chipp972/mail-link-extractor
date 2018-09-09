@@ -22,7 +22,7 @@ export function initGoogleUserModel(): Model<GoogleUser> {
       type: String,
       trim: true,
       lowercase: true,
-      required: true
+      required: true,
     },
     locale: String,
     googleId: String,
@@ -30,14 +30,11 @@ export function initGoogleUserModel(): Model<GoogleUser> {
     refreshToken: String,
     idToken: String,
     tokenType: String,
-    expiryDate: Number
+    expiryDate: Number,
   });
 
   const { mongoose } = registry.getServices();
-  const model: Model<GoogleUser> = mongoose.model(
-    'GoogleUser',
-    GoogleUserSchema
-  );
+  const model: Model<GoogleUser> = mongoose.model('GoogleUser', GoogleUserSchema);
   registry.registerModule(model, 'GoogleUser');
   return model;
 }
