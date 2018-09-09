@@ -9,12 +9,12 @@ export const testPocketAuth = (successCb, errorCb) => (pocketRequestId) => {
     // to protect against CSRF attacks.
     headers: {
       'X-Requested-With': 'XMLHttpRequest',
-      'Content-Type': 'application/json',
-    },
+      'Content-Type': 'application/json'
+    }
   })
-    .then(raw => raw.json())
+    .then((raw) => raw.json())
     .then(({ success, data }) => (success ? successCb(data) : data))
-    .catch(err => errorCb(err));
+    .catch((err) => errorCb(err));
 };
 
 const pocketAuthRedirect = (successCallback, errorCallback) => (e) => {
@@ -25,10 +25,10 @@ const pocketAuthRedirect = (successCallback, errorCallback) => (e) => {
     // to protect against CSRF attacks.
     headers: {
       'X-Requested-With': 'XMLHttpRequest',
-      'Content-Type': 'application/json',
-    },
+      'Content-Type': 'application/json'
+    }
   })
-    .then(raw => raw.json())
+    .then((raw) => raw.json())
     .then(({ success, data }) => {
       if (!success) {
         throw data;
@@ -52,32 +52,31 @@ const logout = (onLogout, onError) => (e) => {
     // to protect against CSRF attacks.
     headers: {
       'X-Requested-With': 'XMLHttpRequest',
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ data: 'gh' }),
+    body: JSON.stringify({ data: 'gh' })
   })
     .then(onLogout)
     .catch(onError);
 };
 
-const pocketAuth = ({
-  isLoggedIn, username, onAuth, onLogout, onError,
-}) => isLoggedIn ? (
-  <div>
-    <p>{`username: ${username}`}</p>
-    <button type="button" onClick={logout(onLogout, onError)}>
+const pocketAuth = ({ isLoggedIn, username, onAuth, onLogout, onError }) =>
+  isLoggedIn ? (
+    <div>
+      <p>{`username: ${username}`}</p>
+      <button type="button" onClick={logout(onLogout, onError)}>
         Logout
-    </button>
-  </div>
-) : (
-  <button type="button" onClick={pocketAuthRedirect(onAuth, onError)}>
+      </button>
+    </div>
+  ) : (
+    <button type="button" onClick={pocketAuthRedirect(onAuth, onError)}>
       Login
-  </button>
-);
+    </button>
+  );
 
 pocketAuth.defaultProps = {
-  onLogout: arg => console.log(arg),
-  onError: err => console.log(err),
+  onLogout: (arg) => console.log(arg),
+  onError: (err) => console.log(err)
 };
 
 pocketAuth.propTypes = {
@@ -85,7 +84,7 @@ pocketAuth.propTypes = {
   username: PropTypes.string.isRequired,
   onAuth: PropTypes.func.isRequired,
   onError: PropTypes.func,
-  onLogout: PropTypes.func,
+  onLogout: PropTypes.func
 };
 
 export default pocketAuth;

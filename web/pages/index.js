@@ -11,7 +11,7 @@ export default class Home extends React.Component {
     jsonPageRes,
     req,
     res,
-    err,
+    err
   }) {
     console.log(pathname, asPath, jsonPageRes, res, err, req);
     // const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
@@ -32,7 +32,7 @@ export default class Home extends React.Component {
       isPocketLoggedIn: false,
       pocketRequestId: null,
       // pocketUserId: '',
-      pocketUsername: '',
+      pocketUsername: ''
     };
     this.onGoogleLogin = this.onGoogleLogin.bind(this);
     this.onGoogleLogout = this.onGoogleLogout.bind(this);
@@ -50,7 +50,7 @@ export default class Home extends React.Component {
       _id,
       isGoogleLoggedIn: true,
       googleEmail: email,
-      googleExpiryDate: expiryDate,
+      googleExpiryDate: expiryDate
     };
     this.setState(stateUpdate, () => updateState(stateUpdate));
   }
@@ -60,7 +60,7 @@ export default class Home extends React.Component {
       _id: null,
       isGoogleLoggedIn: false,
       googleEmail: null,
-      googleExpiryDate: null,
+      googleExpiryDate: null
     };
     this.setState(stateUpdate, () => updateState(stateUpdate));
   }
@@ -75,7 +75,7 @@ export default class Home extends React.Component {
       pocketRequestId: null,
       pocketUserId: _id,
       pocketUsername: username,
-      isPocketLoggedIn: true,
+      isPocketLoggedIn: true
     };
     this.setState(stateUpdate, () => updateState(stateUpdate));
   }
@@ -85,7 +85,7 @@ export default class Home extends React.Component {
     const stateUpdate = {
       pocketUserId: null,
       pocketUsername: null,
-      isPocketLoggedIn: false,
+      isPocketLoggedIn: false
     };
     this.setState(stateUpdate, () => updateState(stateUpdate));
   }
@@ -96,7 +96,7 @@ export default class Home extends React.Component {
 
   hydrate() {
     retrieveState()
-      .then(state => this.setState(state))
+      .then((state) => this.setState(state))
       .then(() => {
         const { pocketRequestId } = this.state;
         if (!pocketRequestId) {
@@ -112,7 +112,7 @@ export default class Home extends React.Component {
       googleEmail,
       isGoogleLoggedIn,
       isPocketLoggedIn,
-      pocketUsername,
+      pocketUsername
     } = this.state;
     return (
       <div>
@@ -120,7 +120,7 @@ export default class Home extends React.Component {
           style={{
             boder: '1px solid black',
             padding: '1rem',
-            textAlign: 'center',
+            textAlign: 'center'
           }}
         >
           Mail Link Extractor
