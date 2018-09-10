@@ -16,8 +16,8 @@ import getServices from './service';
       .addConfig(config)
       .addLib(await getLib())
       .addServices(await getServices())
-      .addMiddlewares(await getMiddlewares())
-      .addRoutes(await getRoutes())
+      .addMiddlewares(getMiddlewares())
+      .addRoutes(getRoutes())
       .startServer();
   } catch (err) {
     console.log('Uncaught error at init', err);

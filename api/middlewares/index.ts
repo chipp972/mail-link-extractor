@@ -1,3 +1,1 @@
-import getExpressMw from './express';
-
-export default getExpressMw;
+export * from './express';

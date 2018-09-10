@@ -27,12 +27,12 @@ module.exports = {
   ],
 
   // The directory where Jest should output its coverage files
-  coverageDirectory: "coverage",
+  coverageDirectory: ".coverage",
 
   // An array of regexp pattern strings used to skip coverage collection
   coveragePathIgnorePatterns: [
     "/node_modules/",
-    "/api/def/"
+    "/api/typedef/"
   ],
 
   // A list of reporter names that Jest uses when writing coverage reports
