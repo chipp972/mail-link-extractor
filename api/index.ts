@@ -1,6 +1,5 @@
 import { getExpressRegistry } from 'express-registry';
 import getConfig from './config';
-import getLib from './lib';
 import getMiddlewares from './middlewares';
 import getRoutes from './routes';
 import getServices from './service';
@@ -14,7 +13,6 @@ import getServices from './service';
 
     registry
       .addConfig(config)
-      .addLib(await getLib())
       .addServices(await getServices())
       .addMiddlewares(getMiddlewares())
       .addRoutes(getRoutes())
