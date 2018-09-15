@@ -1,3 +1,11 @@
+coverage:
+  enabled: true
+  exclude_paths:
+    - '**.spec.js'
+    - '**.spec.ts'
 exclude_paths:
   - '**.config.js'
-  - 'api/def/**'
+  - '**.setup.js'
+  - 'api/typedef/**'
+  - '.prettierrc.js'
+  - '**.json'
