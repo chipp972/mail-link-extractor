@@ -1,1 +1,3 @@
-export * from './express';
+import mw from './express';
+
+export default mw;

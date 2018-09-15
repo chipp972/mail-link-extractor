@@ -59,10 +59,9 @@ typings/
 
 # generated folders
 tmp/
-lib/
 build/
 .credentials
-dist/
+.dist/
 out
 .next
 .vscode

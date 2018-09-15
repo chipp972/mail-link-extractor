@@ -1,7 +1,7 @@
 const withESLint = require('next-eslint');
 
 module.exports = withESLint({
-  distDir: '../dist/front',
+  distDir: '../.dist/front',
   exportPathMap: async function (defaultPathMap) {
     return {
       '/': { page: '/index', query: { test: 'haha' } },

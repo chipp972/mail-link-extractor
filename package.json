@@ -6,12 +6,12 @@
   "engines": {
     "node": ">=8.9"
   },
-  "main": "./dist/src/index",
+  "main": "./.dist/src/index",
   "scripts": {
-    "clean": "rm -rf dist/",
-    "lint:front": "eslint web/pages/** --fix",
+    "clean": "rm -rf .dist/",
+    "lint:front": "eslint web/**/*.js --fix",
     "prebuild:front": "npm run lint:front",
-    "build:front": "next build web/ && next export web/ -o dist/static",
+    "build:front": "next build web/ && next export web/ -o .dist/static",
     "lint:back": "tslint -c tslint.json -p tsconfig.json --fix",
     "prebuild:back": "npm run lint:back",
     "build:back": "tsc --project tsconfig.json --pretty",
