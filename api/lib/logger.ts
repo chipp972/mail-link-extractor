@@ -1,16 +1,13 @@
-import { getExpressRegistry } from 'express-registry';
+import { injectRegistry } from 'singleton-module-registry';
 import { createLogger, format, Logger, transports } from 'winston';
 
-export default function getLogger() {
-  const registry = getExpressRegistry<Config, Lib, Services>();
-  const { env } = registry.getConfig();
-
+export function getLogger({ isDebug }: { isDebug: boolean }) {
   const logger: Logger = createLogger({
     exitOnError: true,
     transports: [
       new transports.Console({
         handleExceptions: true,
-        level: env.isDebug ? 'debug' : 'info',
+        level: isDebug ? 'debug' : 'info',
         format: format.combine(format.colorize()),
       }),
     ],
@@ -18,3 +15,7 @@ export default function getLogger() {
 
   return logger;
 }
+
+export default injectRegistry<any, { isDebug: boolean }, Logger>((registry) => ({
+  isDebug: registry.env.isDebug,
+}))(getLogger);

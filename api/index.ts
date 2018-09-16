@@ -7,7 +7,7 @@ import getServices from './service';
 
 (async () => {
   try {
-    const config = await getConfig();
+    const config = getConfig();
     const registry = getExpressRegistry<Config, Lib, Services>(config.env.port);
 
     registry.on('error', (err: Error) => console.log('Runtime error', err));
