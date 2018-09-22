@@ -1,21 +1,21 @@
 import { injectRegistry } from 'singleton-module-registry';
 import { createLogger, format, Logger, transports } from 'winston';
 
-export function getLogger({ isDebug }: { isDebug: boolean }) {
-  const logger: Logger = createLogger({
-    exitOnError: true,
-    transports: [
-      new transports.Console({
-        handleExceptions: true,
-        level: isDebug ? 'debug' : 'info',
-        format: format.combine(format.colorize()),
-      }),
-    ],
-  });
+interface Props {
+  isDebug: boolean;
+}
 
+export function getLogger({ isDebug }: Props) {
+  const console = new transports.Console({
+    handleExceptions: true,
+    level: isDebug ? 'debug' : 'info',
+    format: format.combine(format.colorize()),
+  });
+  const logger: Logger = createLogger({ exitOnError: true });
+  logger.add(console);
   return logger;
 }
 
-export default injectRegistry<any, { isDebug: boolean }, Logger>((registry) => ({
+export default injectRegistry<any, any, Logger>((registry) => ({
   isDebug: registry.env.isDebug,
 }))(getLogger);

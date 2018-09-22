@@ -10,9 +10,7 @@ interface Props {
   logger: Logger;
 }
 
-export async function init({ isDebug, isProd, mongoPoolSize, mongodbUri, logger }: Props): Promise<Connection> {
-  mongoose.Promise = global.Promise;
-
+export async function initMongoose({ isDebug, isProd, mongoPoolSize, mongodbUri, logger }: Props): Promise<Connection> {
   mongoose.set('debug', isDebug);
 
   const options: ConnectionOptions = {
@@ -24,9 +22,10 @@ export async function init({ isDebug, isProd, mongoPoolSize, mongodbUri, logger 
 
   try {
     const db: Connection = await mongoose.createConnection(mongodbUri, options);
+    logger.debug(`Established connection with ${mongodbUri}`);
     return db;
   } catch (err) {
-    logger.error(err, 'mongoose connexion');
+    logger.error(err.message);
     throw err;
   }
 }
@@ -37,4 +36,4 @@ export default injectRegistry<any, any, Promise<Connection>>((registry) => ({
   mongoPoolSize: registry.env.database.mongoPoolSize,
   mongodbUri: registry.env.database.mongodbUri,
   logger: registry.logger,
-}))(init);
+}))(initMongoose);

@@ -1,8 +1,8 @@
 import { registerModule } from 'singleton-module-registry';
 import env from './env';
+import initGoogleAuth from './lib/google_auth';
 import getLogger from './lib/logger';
 import mongoose from './lib/mongoose';
-import initGoogleAuth from './lib/google_auth';
 
 export async function initRegistry() {
   try {
