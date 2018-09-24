@@ -1,12 +1,20 @@
+import { Logger } from 'winston';
 import { OAuth2Client } from 'google-auth-library';
 import { Document } from 'mongoose';
 
 export interface GoogleAccountData {
-  googleId: string;
   email: string;
-  locale: 'fr' | 'en' | string;
-  token: string; // access token or refresh token
-  tokenExpiryDate: number;
+  userId: string;
+  profile: {
+    locale: string;
+    picture: string;
+    googleId: string;
+  };
+  credentials: {
+    access_token: string;
+    refresh_token: string;
+    expiry_date: number;
+  };
 }
 
 export interface GoogleAccount extends GoogleAccountData, Document {}
@@ -14,7 +22,7 @@ export interface GoogleAccount extends GoogleAccountData, Document {}
 export interface RefreshTokenProps {
   clientSecret: string;
   clientId: string;
-  refreshToken: string;
+  logger: Logger;
   tokenUrl: string;
 }
 
@@ -24,6 +32,6 @@ export interface RefreshTokenResponse {
 }
 
 export interface AccessTokenProps {
-  code: string;
+  logger: Logger;
   oauth2Client: OAuth2Client;
 }

@@ -12,17 +12,16 @@ export function initGoogleAccountModel({ database }: ModelProps<GoogleAccount>):
       required: true,
       match: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,}$/,
     },
+    userId: { type: Schema.Types.ObjectId, ref: 'User' },
     profile: {
       locale: String,
       picture: String,
       googleId: String,
     },
     credentials: {
-      tokens: {
-        access_token: String,
-        refresh_token: String,
-        expiry_date: Number,
-      },
+      access_token: String,
+      refresh_token: String,
+      expiry_date: Number,
     },
   });
   return database.model('GoogleAccount', GoogleAccountSchema);

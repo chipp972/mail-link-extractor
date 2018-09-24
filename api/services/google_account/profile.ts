@@ -21,12 +21,12 @@ export function getProfile({ oauth2Client, logger }: Props) {
       return res.data;
     } catch (err) {
       logger.error(err.message);
-      return {};
+      throw err;
     }
   };
 }
 
-export default injectRegistry<any, any, any>((registry) => ({
+export const getProfileWithRegistry = injectRegistry<any, any, any>((registry) => ({
   oauth2Client: registry.googleAuth,
   logger: registry.logger,
-}))(getProfile);
+}))(getProfile)();
