@@ -1,14 +1,10 @@
 import { Model, Schema } from 'mongoose';
 import { injectRegistry } from 'singleton-module-registry';
+import { ModelProps } from '../services_typedef';
 import { User } from './user_typedef';
 
-interface Props {
-  SchemaConstructor: any;
-  database: { model: (collectionName: string, sch: Schema) => Model<any> };
-}
-
-export function initUserModel({ SchemaConstructor, database }: Props): Model<User> {
-  const UserSchema: Schema = new SchemaConstructor({
+export function initUserModel({ database }: ModelProps<User>): Model<User> {
+  const UserSchema: Schema = new database.Schema({
     email: {
       type: String,
       trim: true,
@@ -21,6 +17,5 @@ export function initUserModel({ SchemaConstructor, database }: Props): Model<Use
 }
 
 export default injectRegistry<any, any, any>((registry) => ({
-  SchemaConstructor: registry.mongoose.Schema,
   database: registry.mongoose,
 }))(initUserModel);

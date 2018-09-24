@@ -12,6 +12,7 @@ interface EnvObject {
       clientId?: string;
       clientSecret?: string;
       redirectUrl?: string;
+      tokenUrl: string;
     };
   };
   isProd: boolean;
@@ -36,6 +37,7 @@ const env: EnvObject = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       clientId: process.env.GOOGLE_CLIENT_ID,
       redirectUrl: process.env.GOOGLE_REDIRECT_URL || '',
+      tokenUrl: process.env.GOOGLE_TOKEN_URL || 'https://www.googleapis.com/oauth2/v4/token',
     },
   },
   isProd: process.env.NODE_ENV === 'production',

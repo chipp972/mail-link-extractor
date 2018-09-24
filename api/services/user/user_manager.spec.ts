@@ -1,12 +1,12 @@
 jest.mock('./user_model');
 import initUserModelWithRegistry from './user_model';
 initUserModelWithRegistry.mockImplementation(() => ({
-    create: (data: any) => data,
-    findById: (id: string) => id,
-    findByIdAndUpdate: (id: string, data: any) => data,
-    findByIdAndRemove: (id: string) => id
+  create: (data: any) => data,
+  findById: (id: string) => id,
+  findByIdAndUpdate: (id: string, data: any) => data,
+  findByIdAndRemove: (id: string) => id,
 }));
-import {initUserManager} from './user_manager';
+import { initUserManager } from './user_manager';
 
 describe('User manager', () => {
   const userManager = initUserManager();
