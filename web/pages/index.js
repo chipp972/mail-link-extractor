@@ -1,8 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
-import GoogleAuth from './component/google-auth';
-import PocketAuth, { testPocketAuth } from './component/pocket-auth';
-import { retrieveState, updateState } from './utils/persistence';
+import GoogleAuth from '../components/google-auth';
+import PocketAuth, { testPocketAuth } from '../components/pocket-auth';
+import { retrieveState, updateState } from '../utils/persistence';
 
 export default class Home extends React.Component {
   static async getInitialProps({ pathname, asPath, jsonPageRes, req, res, err }) {
