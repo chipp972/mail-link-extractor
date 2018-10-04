@@ -1,25 +1,16 @@
-import { getExpressRegistry } from 'express-registry';
-import getConfig from './config';
-import getLib from './lib';
-import getMiddlewares from './middlewares';
-import getRoutes from './routes';
-import getServices from './service';
+import { registerModule } from 'singleton-module-registry';
+import env from './env';
+import registerLib from './lib';
+import registerServices from './services';
+import startApp from './server';
 
 (async () => {
   try {
-    const config = getConfig();
-    const registry = getExpressRegistry<Config, Lib, Services>(config.env.port);
-
-    registry.on('error', (err: Error) => console.log('Runtime error', err));
-
-    registry
-      .addConfig(config)
-      .addLib(await getLib())
-      .addServices(await getServices())
-      .addMiddlewares(getMiddlewares())
-      .addRoutes(getRoutes())
-      .startServer();
+    registerModule('env', env);
+    await registerLib();
+    await registerServices();
+    await startApp();
   } catch (err) {
-    console.log('Uncaught error at init', err);
+    console.log('Uncaught error at init api', err);
   }
 })();
