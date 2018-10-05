@@ -1,4 +1,4 @@
-interface EnvObject {
+export interface Env {
   database: {
     mongodbUri: string;
     mongoPoolSize: number;
@@ -24,7 +24,7 @@ interface EnvObject {
   port: number;
 }
 
-const env: EnvObject = {
+const env: Env = {
   database: {
     mongodbUri: process.env.MONGODB_URI || 'mongodb://localhost/test',
     mongoPoolSize: parseInt(process.env.MONGO_POOL_SIZE || '5', 10),

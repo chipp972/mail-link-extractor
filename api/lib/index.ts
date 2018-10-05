@@ -1,18 +1,22 @@
-import { registerModule } from 'singleton-module-registry';
+import {Env} from '../env';
+import {Lib} from './lib_typedef.ts'
 import initGoogleAuth from './google_auth';
-import getLogger from './logger';
-import mongoose from './mongoose';
+import initLogger from './logger';
+import initMongoose from './mongoose';
 
-export async function registerLib() {
+export {Lib} from './lib_typedef.ts'
+
+export async function initLib(env: Env): Lib {
   try {
-    registerModule('logger', getLogger());
-    registerModule('mongoose', await mongoose());
-    registerModule('googleAuth', initGoogleAuth());
+    const logger = initLogger(env);
+    const googleAuth = initGoogleAuth(env)
+    const db = await initMongoose(env, logger);
+    return { logger, db, googleAuth };
   } catch (err) {
     console.log('Error at init lib: ', err);
     throw err;
   }
 }
 
-export default registerLib;
+export default initLib;
 
