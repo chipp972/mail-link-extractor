@@ -1,9 +1,9 @@
 import { Model } from 'mongoose';
-import initUserModelWithRegistry from './user_model';
-import { User, UserData } from './user_typedef';
+import initUserModel from './user_model';
+import { User, UserData, UserManager } from './user_typedef';
 
-export function initUserManager() {
-  const UserModel: Model<User> = initUserModelWithRegistry();
+export function initUserManager(lib: Lib): UserManager {
+  const UserModel: Model<User> = initUserModel(lib);
   return {
     create: async (data: UserData) => await UserModel.create(data),
     read: async (id: string) => await UserModel.findById(id),

@@ -15,6 +15,7 @@
     "lint:back": "tslint -c tslint.json -p tsconfig.json --fix",
     "prebuild:back": "npm run lint:back",
     "build:back": "tsc --project tsconfig.json --pretty",
+    "build:watch": "tsc --watch",
     "format": "prettier --write '{api,web,worker}/**/*.{ts,js}'",
     "prebuild": "npm run clean && npm run format",
     "build": "npm run build:back && npm run build:front",
@@ -23,6 +24,7 @@
     "test:ci": "jest --coverage && cat ./.coverage/lcov.info | codacy-coverage",
     "prestart": "npm run build",
     "start": "nf start api",
+    "dev": "concurrently \"nf start dev\" \"npm run build:watch\"",
     "prerelease": "npm run build && npm run test",
     "release": "standard-version"
   },
@@ -33,10 +35,12 @@
   },
   "lint-staged": {
     "*.js": [
-      "eslint --fix"
+      "eslint --fix",
+      "git add"
     ],
     "*.ts": [
-      "tslint --fix"
+      "tslint --fix",
+      "git add"
     ],
     "*.{js,ts,json,css}": [
       "prettier --write",
@@ -61,6 +65,7 @@
     "react": "16.5.0",
     "react-dom": "16.5.0",
     "react-google-login": "3.2.1",
+    "response-time": "2.3.2",
     "tslib": "1.9.3",
     "winston": "3.1.0"
   },
@@ -78,9 +83,11 @@
     "@types/ramda": "0.25.37",
     "@types/react": "16.4.13",
     "@types/react-dom": "16.0.7",
+    "@types/response-time": "2.3.2",
     "@types/winston": "2.4.4",
     "babel-jest": "23.4.2",
     "codacy-coverage": "3.0.0",
+    "concurrently": "4.0.1",
     "enzyme": "3.6.0",
     "enzyme-adapter-react-16": "1.5.0",
     "eslint": "5.5.0",
@@ -93,6 +100,7 @@
     "jest": "^23.5.0",
     "lint-staged": "7.2.2",
     "next-eslint": "0.0.4",
+    "nodemon": "1.18.4",
     "prettier": "1.14.2",
     "react-test-renderer": "16.5.0",
     "singleton-module-registry": "1.0.1",

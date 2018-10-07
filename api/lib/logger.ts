@@ -1,11 +1,10 @@
-import { injectRegistry } from 'singleton-module-registry';
 import { createLogger, format, Logger, transports } from 'winston';
 
 interface Props {
   isDebug: boolean;
 }
 
-export function getLogger({ isDebug }: Props) {
+export function initLogger({ isDebug }: Props) {
   const console = new transports.Console({
     handleExceptions: true,
     level: isDebug ? 'debug' : 'info',
@@ -16,6 +15,4 @@ export function getLogger({ isDebug }: Props) {
   return logger;
 }
 
-export default injectRegistry<any, any, Logger>((registry) => ({
-  isDebug: registry.env.isDebug,
-}))(getLogger);
+export default initLogger;

@@ -1,8 +1,16 @@
-import { registerModule } from 'singleton-module-registry';
+import initGoogleAccountManager from './google_account/google_account_manager';
 import initUserManager from './user/user_manager';
 
-export const registerServices = () => {
-  registerModule('user', initUserManager());
+export const initServices = (env: Env, lib: Lib): Services => {
+  try {
+    const user = initUserManager(lib);
+    const googleAccount = initGoogleAccountManager(env, lib);
+
+    return { user, googleAccount };
+  } catch (err) {
+    lib.logger.error(err);
+    throw err;
+  }
 };
 
-export default registerServices;
+export default initServices;

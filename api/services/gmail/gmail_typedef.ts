@@ -1,9 +1,9 @@
-declare interface MessageHeader {
+export interface MessageHeader {
   name: string;
   value: string;
 }
 
-declare interface MessagePart {
+export interface MessagePart {
   partId: string;
   mimeType: string;
   filename: string;
@@ -14,7 +14,7 @@ declare interface MessagePart {
   };
 }
 
-declare interface MessagePayload {
+export interface MessagePayload {
   headers: MessageHeader[];
   body: {
     size: number;
@@ -24,7 +24,7 @@ declare interface MessagePayload {
   sizeEstimate: number;
 }
 
-declare interface MessageData {
+export interface MessageData {
   id: string;
   threadId: string;
   labelIds: string[];
@@ -34,12 +34,12 @@ declare interface MessageData {
   payload: MessagePayload;
 }
 
-declare interface MessageListItem {
+export interface MessageListItem {
   id: string;
   threadId: string;
 }
 
-declare interface GmailLabel {
+export interface GmailLabel {
   id: string;
   name: string;
   messageListVisibility: string;

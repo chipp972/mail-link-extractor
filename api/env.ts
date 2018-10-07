@@ -1,29 +1,3 @@
-export interface Env {
-  database: {
-    mongodbUri: string;
-    mongoPoolSize: number;
-  };
-  isDebug: boolean;
-  express: {
-    sessionSecret: string;
-  };
-  google: {
-    auth: {
-      clientId?: string;
-      clientSecret?: string;
-      redirectUrl?: string;
-      tokenUrl: string;
-    };
-  };
-  isProd: boolean;
-  isDev: boolean;
-  pocket: {
-    consumer_key: string;
-    redirect_uri: string;
-  };
-  port: number;
-}
-
 const env: Env = {
   database: {
     mongodbUri: process.env.MONGODB_URI || 'mongodb://localhost/test',
@@ -34,9 +8,10 @@ const env: Env = {
   },
   google: {
     auth: {
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      redirectUrl: process.env.GOOGLE_REDIRECT_URL || '',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+      clientId: process.env.GOOGLE_CLIENT_ID || '',
+      redirectUrl: process.env.GOOGLE_REDIRECT_URL || 'postmessage',
+      tokenRevokationUrl: process.env.GOOGLE_REVOKATION_URL || 'https://accounts.google.com/o/oauth2/revoke',
       tokenUrl: process.env.GOOGLE_TOKEN_URL || 'https://www.googleapis.com/oauth2/v4/token',
     },
   },
@@ -47,6 +22,7 @@ const env: Env = {
     consumer_key: process.env.POCKET_CONSUMER_KEY || '',
     redirect_uri: process.env.POCKET_REDIRECT_URL || '',
   },
+  hostname: process.env.ORIGIN || 'http://localhost',
   port: parseInt(process.env.PORT || '5000', 10),
 };
 

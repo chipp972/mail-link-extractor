@@ -2,11 +2,13 @@ import cors from 'cors';
 import express from 'express';
 import { RouterObject } from 'express-registry';
 import { join } from 'path';
+import responseTimeMiddleware from 'response-time';
 
-export default function getExpressMiddlewares(): RouterObject[] {
+export function getMiddlewares(env: Env): RouterObject[] {
   const mw: any[] = [
+    responseTimeMiddleware(),
     cors({
-      origin: 'http://localhost:5000',
+      origin: `${env.hostname}:${env.port}`,
       optionsSuccessStatus: 200,
     }),
     express.json(),
@@ -16,3 +18,5 @@ export default function getExpressMiddlewares(): RouterObject[] {
 
   return mw;
 }
+
+export default getMiddlewares;

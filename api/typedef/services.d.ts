@@ -1,9 +1,9 @@
-import { OAuth2Client } from 'google-auth-library';
-import { Connection } from 'mongoose';
+import { GoogleAccountManager } from '../services/google_account/google_account_typedef';
+import { UserManager } from '../services/user/user_typedef';
 
 declare global {
   interface Services {
-    mongoose: Connection;
-    googleAuth: OAuth2Client;
+    user: UserManager;
+    googleAccount: GoogleAccountManager;
   }
 }

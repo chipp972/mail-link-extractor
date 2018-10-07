@@ -1,39 +1,87 @@
 import { Model } from 'mongoose';
 import { User } from '../user/user_typedef';
-import initGoogleAccountWithRegistry from './google_account_model';
-import { GoogleAccount, GoogleAccountData } from './google_account_typedef';
-import { getAccessTokenWithRegistry } from './token';
-import { getProfileWithRegistry } from './profile';
+import initGoogleAccountModel from './google_account_model';
+import { GoogleAccount, GoogleAccountManager } from './google_account_typedef';
+import getProfile from './profile';
+import { getAccessToken, refresh, revoke } from './token';
 
-interface CreateGoogleAccountInputs {
-  user: User;
-  code: string;
-}
+export function initGoogleAccountManager(env: Env, lib: Lib): GoogleAccountManager {
+  const GoogleAccountModel: Model<GoogleAccount> = initGoogleAccountModel(lib);
 
-export const createGoogleAccount = (model: Model<GoogleAccount>) => async ({ user, code }: CreateGoogleAccountInputs): Promise<GoogleAccount> => {
-  try {
-    const { tokens } = await getAccessTokenWithRegistry(code);
-    const profile = await getProfileWithRegistry(tokens);
-    const googleAccount = await model.create({
-      email: profile.email,
-      userId: user.id,
-      profile,
-      credentials: tokens,
-    });
-    return googleAccount;
-  } catch (err) {
-    throw err;
-  }
-};
+  const getAccountOrThrow = async (id: string) => {
+    try {
+      const account = await GoogleAccountModel.findById(id);
+      if (!account) {
+        lib.logger.debug(`Account with id ${id} not found`);
+        throw new Error(`Account with id ${id} not found`);
+      }
+      return account;
+    } catch (err) {
+      lib.logger.error(err);
+      throw err;
+    }
+  };
 
-export function initGoogleAccountManager() {
-  const GoogleAccountModel: Model<GoogleAccount> = initGoogleAccountWithRegistry();
+  const createAccount = async ({ user, code }: { user: User; code: string }): Promise<GoogleAccount> => {
+    try {
+      const { tokens } = await getAccessToken(lib, code);
+      const profile = await getProfile(lib, tokens);
+      const googleAccount = await GoogleAccountModel.create({
+        email: profile.email,
+        userId: user.id,
+        profile,
+        credentials: tokens,
+      });
+      return googleAccount;
+    } catch (err) {
+      lib.logger.error(err);
+      throw err;
+    }
+  };
+
+  const refreshToken = async (googleAccountId: string) => {
+    try {
+      const account = await getAccountOrThrow(googleAccountId);
+      const token = account.credentials.access_token || account.credentials.refresh_token;
+      const { access_token, expires_in } = await refresh(env, lib, token);
+      account.credentials.access_token = access_token;
+      account.credentials.expiry_date = expires_in;
+      return await account.save();
+    } catch (err) {
+      lib.logger.error(err);
+      throw err;
+    }
+  };
+
+  const revokeToken = async (googleAccountId: string) => {
+    try {
+      const account = await getAccountOrThrow(googleAccountId);
+      const token = account.credentials.access_token || account.credentials.refresh_token;
+      const result = await revoke(env, token);
+      lib.logger.debug(result);
+      delete account.credentials;
+      return await account.save();
+    } catch (err) {
+      lib.logger.error(err);
+      throw err;
+    }
+  };
+
+  const deleteAccount = async (googleAccountId: string) => {
+    try {
+      const account = await revokeToken(googleAccountId);
+      return await account.remove();
+    } catch (err) {
+      lib.logger.error(err);
+      throw err;
+    }
+  };
+
   return {
-    create: createGoogleAccount(GoogleAccountModel),
-    // read: async (id: string) => await GoogleAccountModel.findById(id),
-    // update: async (id: string, data: Partial<GoogleAccountData>) =>
-    //   await GoogleAccountModel.findByIdAndUpdate(id, data),
-    // delete: async (id: string) => await GoogleAccountModel.findByIdAndRemove(id),
+    createAccount,
+    refreshToken,
+    revokeToken,
+    deleteAccount,
   };
 }
 

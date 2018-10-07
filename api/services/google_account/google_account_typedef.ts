@@ -1,6 +1,5 @@
-import { Logger } from 'winston';
-import { OAuth2Client } from 'google-auth-library';
 import { Document } from 'mongoose';
+import { User } from '../user/user_typedef';
 
 export interface GoogleAccountData {
   email: string;
@@ -19,19 +18,14 @@ export interface GoogleAccountData {
 
 export interface GoogleAccount extends GoogleAccountData, Document {}
 
-export interface RefreshTokenProps {
-  clientSecret: string;
-  clientId: string;
-  logger: Logger;
-  tokenUrl: string;
-}
-
 export interface RefreshTokenResponse {
   access_token: string;
   expires_in: number;
 }
 
-export interface AccessTokenProps {
-  logger: Logger;
-  oauth2Client: OAuth2Client;
+export interface GoogleAccountManager {
+  createAccount: (data: { user: User; code: string }) => Promise<GoogleAccount>;
+  refreshToken: (id: string) => Promise<GoogleAccount | null>;
+  revokeToken: (id: string) => Promise<GoogleAccount | null>;
+  deleteAccount: (id: string) => Promise<GoogleAccount | null>;
 }

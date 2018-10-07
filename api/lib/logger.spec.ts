@@ -1,10 +1,10 @@
-import { getLogger } from './logger';
+import initLogger from './logger';
 
 describe('Logger', () => {
   let logger: any;
 
   beforeEach(() => {
-    logger = getLogger({ isDebug: true });
+    logger = initLogger({ isDebug: true });
   });
 
   it('should be defined', () => {

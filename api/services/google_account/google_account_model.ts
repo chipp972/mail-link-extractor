@@ -1,16 +1,15 @@
 import { Model, Schema } from 'mongoose';
-import { injectRegistry } from 'singleton-module-registry';
-import { ModelProps } from '../services_typedef';
+import { emailRegex } from '../helpers/validation';
 import { GoogleAccount } from './google_account_typedef';
 
-export function initGoogleAccountModel({ database }: ModelProps<GoogleAccount>): Model<GoogleAccount> {
+export function initGoogleAccountModel(lib: Lib): Model<GoogleAccount> {
   const GoogleAccountSchema: Schema = new Schema({
     email: {
       type: String,
       trim: true,
       lowercase: true,
       required: true,
-      match: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,}$/,
+      match: emailRegex,
     },
     userId: { type: Schema.Types.ObjectId, ref: 'User' },
     profile: {
@@ -24,9 +23,7 @@ export function initGoogleAccountModel({ database }: ModelProps<GoogleAccount>):
       expiry_date: Number,
     },
   });
-  return database.model('GoogleAccount', GoogleAccountSchema);
+  return lib.db.model('GoogleAccount', GoogleAccountSchema);
 }
 
-export default injectRegistry<any, any, any>((registry) => ({
-  database: registry.mongoose,
-}))(initGoogleAccountModel);
+export default initGoogleAccountModel;

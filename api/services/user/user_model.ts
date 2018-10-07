@@ -1,21 +1,18 @@
 import { Model, Schema } from 'mongoose';
-import { injectRegistry } from 'singleton-module-registry';
-import { ModelProps } from '../services_typedef';
+import { emailRegex } from '../helpers/validation';
 import { User } from './user_typedef';
 
-export function initUserModel({ database }: ModelProps<User>): Model<User> {
-  const UserSchema: Schema = new database.Schema({
+export function initUserModel(lib: Lib): Model<User> {
+  const UserSchema: Schema = new Schema({
     email: {
       type: String,
       trim: true,
       lowercase: true,
       required: true,
-      match: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,}$/,
+      match: emailRegex,
     },
   });
-  return database.model('User', UserSchema);
+  return lib.db.model('User', UserSchema);
 }
 
-export default injectRegistry<any, any, any>((registry) => ({
-  database: registry.mongoose,
-}))(initUserModel);
+export default initUserModel;

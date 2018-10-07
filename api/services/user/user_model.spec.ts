@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { initUserModel } from './user_model';
 
-const User = initUserModel({ database: mongoose });
+const User = initUserModel({ db: mongoose });
 
 describe('User model Validation', () => {
   it('should not create User without email', () => {
