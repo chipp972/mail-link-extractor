@@ -16,14 +16,9 @@ export interface MessageListParams {
 export const getMessageList = ({
   auth,
   q = '*',
-  maxResults = 2,
+  maxResults,
   pageToken,
-}: {
-  auth: OAuth2Client;
-  q: string;
-  maxResults: number;
-  pageToken: string;
-}) => {
+}: MessageListParams) => {
   return new Promise((resolve, reject) => {
     gmail.users.messages
       .list({

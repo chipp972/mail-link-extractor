@@ -1,12 +1,11 @@
 import { NextFunction } from 'express';
 import { HandlerObject } from 'express-registry';
 
-export const googleAccountRoutes = (services: Services): HandlerObject[] => [
+export const gmailRoutes = (services: Services): HandlerObject[] => [
   {
     method: 'post',
-    url: '/api/google/sendcode',
+    url: '/api/gmail/message-link',
     handler: async (req: any, res: any, next: NextFunction) => {
-      // TODO: put this in security
       if (!req.headers['x-requested-with']) {
         return next(new Error('Potential security risk'));
       }
