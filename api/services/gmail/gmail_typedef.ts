@@ -1,4 +1,4 @@
-import {GoogleAccount} from '../google_account/google_account_typedef';
+import { GoogleAccount } from '../google_account/google_account_typedef';
 
 export interface MessageHeader {
   name: string;
@@ -58,6 +58,6 @@ export interface GmailLabel {
 }
 
 export interface GmailManager {
-  getMessagesLinks: async (googleAccount: GoogleAccount, query?: string, maxResults?: number) => Promise<string[]>;
-  addLabelsToMessages: async (googleAccount: GoogleAccount, messageIds: string[], labels: string[]) => Promise<any>;
+  getMessagesLinks: (googleAccount: GoogleAccount, query?: string, maxResults?: number) => Promise<string[]>;
+  addLabelsToMessages: (googleAccount: GoogleAccount, messageIds: string[], labels: string[]) => Promise<any>;
 }

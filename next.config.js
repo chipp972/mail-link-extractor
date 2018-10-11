@@ -6,7 +6,6 @@ module.exports = withESLint({
     return {
       '/': { page: '/index', query: { test: 'haha' } },
       '/index': { page: '/index', query: { test: 'haha' } },
-      '/session': { page: '/session' },
     };
   },
 });

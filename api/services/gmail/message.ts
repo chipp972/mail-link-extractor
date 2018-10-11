@@ -1,5 +1,6 @@
 import { OAuth2Client } from 'google-auth-library';
 import { gmail_v1, google } from 'googleapis';
+import { MessageData } from './gmail_typedef.ts';
 
 const gmail: gmail_v1.Gmail = google.gmail({ version: 'v1' });
 
@@ -13,12 +14,7 @@ export interface MessageListParams {
   pageToken?: string;
 }
 
-export const getMessageList = ({
-  auth,
-  q = '*',
-  maxResults,
-  pageToken,
-}: MessageListParams) => {
+export const getMessageList = ({ auth, q = '*', maxResults, pageToken }: MessageListParams): MessageData => {
   return new Promise((resolve, reject) => {
     gmail.users.messages
       .list({
