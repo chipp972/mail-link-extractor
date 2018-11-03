@@ -1,6 +1,6 @@
 import { Model, Schema } from 'mongoose';
+import { GoogleAccount, Lib } from '../../typedef';
 import { emailRegex } from '../helpers/validation';
-import { GoogleAccount } from './google_account_typedef';
 
 export function initGoogleAccountModel(lib: Lib): Model<GoogleAccount> {
   const GoogleAccountSchema: Schema = new Schema({

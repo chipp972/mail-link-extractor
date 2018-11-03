@@ -1,4 +1,4 @@
-import { GmailManager } from './gmail_typedef';
+import { GmailManager, Lib } from '../../typedef';
 import { addLabelsToMessageList } from './labels';
 import { findLinksInMessageList } from './link';
 import { getMessageList } from './message';

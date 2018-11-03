@@ -1,6 +1,6 @@
 // Check doc on https://developers.google.com/identity/protocols/OAuth2WebServer#offline
 import fetch from 'isomorphic-unfetch';
-import { RefreshTokenResponse } from './google_account_typedef';
+import { Env, Lib, RefreshTokenResponse } from '../../typedef';
 
 const headers = {
   'Content-type': 'application/x-www-form-urlencoded',

@@ -1,6 +1,6 @@
 import { decode } from '@coolgk/base64';
 import { compose, drop, equals, flatten, join, map, path, pathSatisfies } from 'ramda';
-import { MessageData, MessagePart, MessagePayload } from './gmail_typedef';
+import { MessageData, MessagePart, MessagePayload } from '../../typedef';
 
 const getMessagePayload = (obj?: MessageData): MessagePayload | {} => path(['data', 'payload'])(obj) || {};
 

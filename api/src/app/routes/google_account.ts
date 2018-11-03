@@ -1,5 +1,5 @@
 import { NextFunction } from 'express';
-import { HandlerObject } from 'express-registry';
+import { HandlerObject, Lib, Services } from '../../typedef';
 
 export const googleAccountRoutes = (lib: Lib, services: Services): HandlerObject[] => [
   {

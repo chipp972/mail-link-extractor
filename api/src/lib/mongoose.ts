@@ -1,5 +1,6 @@
 import mongoose, { Connection, ConnectionOptions } from 'mongoose';
 import { Logger } from 'winston';
+import { Env } from '../typedef';
 
 export async function initMongoose(env: Env, logger: Logger): Promise<Connection> {
   mongoose.set('debug', env.isDebug);

@@ -1,8 +1,8 @@
 import cors from 'cors';
 import express from 'express';
-import { RouterObject } from 'express-registry';
 import { join } from 'path';
 import responseTimeMiddleware from 'response-time';
+import { Env, RouterObject } from '../typedef';
 
 export function getMiddlewares(env: Env): RouterObject[] {
   const mw: any[] = [

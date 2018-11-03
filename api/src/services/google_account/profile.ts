@@ -1,5 +1,6 @@
 import { Credentials } from 'google-auth-library/build/src/auth/credentials';
 import { google, oauth2_v2 } from 'googleapis';
+import { Lib } from '../../typedef';
 
 export async function getProfile(lib: Lib, credentials: Credentials) {
   try {

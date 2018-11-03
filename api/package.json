@@ -9,8 +9,7 @@
     "build:watch": "tsc --watch",
     "test": "jest",
     "test:watch": "jest --watch",
-    "dev": "nodemon",
-    "debug": "nodemon --config nodemon-debug.json"
+    "dev": "env $(cat ../.env) NODE_ENV=development nodemon"
   },
   "devDependencies": {
     "@types/cors": "2.8.4",
@@ -36,7 +35,6 @@
     "@coolgk/base64": "2.0.4",
     "cors": "2.8.4",
     "express": "4.16.4",
-    "express-registry": "0.1.2",
     "googleapis": "34.0.0",
     "isomorphic-unfetch": "3.0.0",
     "mongoose": "5.3.9",

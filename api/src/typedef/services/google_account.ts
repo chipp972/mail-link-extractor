@@ -1,5 +1,5 @@
 import { Document } from 'mongoose';
-import { User } from '../user/user_typedef';
+import { User } from './user';
 
 export interface GoogleAccountData {
   email: string;

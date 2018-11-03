@@ -1,3 +1,4 @@
+import { Env, Lib, Services } from '../typedef';
 import initGmailManager from './gmail/gmail_manager';
 import initGoogleAccountManager from './google_account/google_account_manager';
 import initUserManager from './user/user_manager';

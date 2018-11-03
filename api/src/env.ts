@@ -1,3 +1,5 @@
+import { Env } from './typedef';
+
 const env: Env = {
   database: {
     mongodbUri: process.env.MONGODB_URI || 'mongodb://localhost/test',

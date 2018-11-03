@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
+import { GoogleAccount } from '../../typedef';
 import { initGoogleAccountModel } from './google_account_model';
-import { GoogleAccount } from './google_account_typedef';
 
 const GoogleAccountModel = initGoogleAccountModel({ db: mongoose });
 

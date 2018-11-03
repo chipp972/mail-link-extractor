@@ -1,7 +1,6 @@
 import { Model } from 'mongoose';
-import { User } from '../user/user_typedef';
+import { Env, GoogleAccount, GoogleAccountManager, Lib, User } from '../../typedef';
 import initGoogleAccountModel from './google_account_model';
-import { GoogleAccount, GoogleAccountManager } from './google_account_typedef';
 import getProfile from './profile';
 import { getAccessToken, refresh, revoke } from './token';
 

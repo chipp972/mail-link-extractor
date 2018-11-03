@@ -1,6 +1,6 @@
 import { Model } from 'mongoose';
+import { Lib, User, UserData, UserManager } from '../../typedef';
 import { initUserModel } from './user_model';
-import { User, UserData, UserManager } from './user_typedef';
 
 export function initUserManager(lib: Lib): UserManager {
   const UserModel: Model<User> = initUserModel(lib);

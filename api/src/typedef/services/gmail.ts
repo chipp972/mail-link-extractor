@@ -1,4 +1,4 @@
-import { GoogleAccount } from '../google_account/google_account_typedef';
+import { GoogleAccount } from './google_account';
 
 export interface MessageHeader {
   name: string;

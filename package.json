@@ -34,11 +34,10 @@
     ]
   },
   "dependencies": {
-    "@heroku/foreman": "2.0.2",
     "@coolgk/base64": "2.0.4",
-    "express": "4.16.4",
+    "@heroku/foreman": "2.0.2",
     "cors": "2.8.4",
-    "express-registry": "0.1.2",
+    "express": "4.16.4",
     "googleapis": "34.0.0",
     "isomorphic-unfetch": "3.0.0",
     "mongoose": "5.3.9",

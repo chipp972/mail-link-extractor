@@ -1,5 +1,5 @@
 import { NextFunction, Request } from 'express';
-import { HandlerObject } from 'express-registry';
+import { HandlerObject, Services } from '../../typedef';
 
 export const userCrudRoutes = (services: Services): HandlerObject[] => [
   {

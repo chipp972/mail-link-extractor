@@ -1,6 +1,6 @@
 import { Model, Schema } from 'mongoose';
+import { Lib, User } from '../../typedef';
 import { emailRegex } from '../helpers/validation';
-import { User } from './user_typedef';
 
 export function initUserModel(lib: Lib): Model<User> {
   const UserSchema: Schema = new Schema({
