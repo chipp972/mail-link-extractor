@@ -1,7 +1,7 @@
 import { NextFunction } from 'express';
 import { HandlerObject } from 'express-registry';
 
-export const googleAccountRoutes = (services: Services): HandlerObject[] => [
+export const googleAccountRoutes = (lib: Lib, services: Services): HandlerObject[] => [
   {
     method: 'post',
     url: '/api/google/sendcode',
@@ -22,6 +22,7 @@ export const googleAccountRoutes = (services: Services): HandlerObject[] => [
           user: currentUser,
           code: req.body.code,
         });
+        lib.logger.debug(account);
         res.result = { account };
         return next();
       } catch (err) {

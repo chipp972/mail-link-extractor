@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Head from '../components/head';
 import GoogleAuth from '../components/google-auth';
 import PocketAuth, { testPocketAuth } from '../components/pocket-auth';
 import { retrieveState, updateState } from '../utils/persistence';
@@ -103,6 +104,7 @@ export default class Home extends React.Component {
     const { error, googleEmail, isGoogleLoggedIn, isPocketLoggedIn, pocketUsername } = this.state;
     return (
       <div>
+        <Head title="Home" />
         <h1
           style={{
             boder: '1px solid black',

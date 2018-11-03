@@ -63,7 +63,7 @@ export const findLinksInMessage = (obj?: MessageData): string[] => {
   }
 };
 
-export const findLinksInMessageList = (objs: MessageData[]): string[] => flatten<string>(map(findLinksInMessage, objs));
+export const findLinksInMessageList = (objs: any[]): string[] => flatten<string>(map(findLinksInMessage, objs));
 
 /**
  * Lists the messages in the user's account.

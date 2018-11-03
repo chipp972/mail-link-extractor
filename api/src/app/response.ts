@@ -1,4 +1,5 @@
 import { NextFunction } from 'express';
+import { path } from 'ramda';
 
 export const getResponseHandlers = (): any[] => [
   {
@@ -16,7 +17,7 @@ export const getResponseHandlers = (): any[] => [
   {
     url: '/api',
     router: (error: any, _: any, res: any, __: NextFunction) =>
-      res.status(res.result.status || 500).json({
+      res.status(path(['result', 'status'], res) || 500).json({
         success: false,
         error,
       }),

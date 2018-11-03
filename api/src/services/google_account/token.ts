@@ -23,6 +23,7 @@ export const getAccessToken = async (lib: Lib, code: string) => {
  */
 export const refresh = async (env: Env, lib: Lib, refreshToken: string): Promise<RefreshTokenResponse> => {
   try {
+    lib.logger.debug(refreshToken, 'refreshToken');
     const res = await fetch(env.google.auth.tokenUrl, {
       headers,
       body: JSON.stringify({

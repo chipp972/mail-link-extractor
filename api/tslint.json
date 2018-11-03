@@ -2,13 +2,7 @@
   "defaultSeverity": "error",
   "extends": ["tslint:recommended"],
   "jsRules": {
-    "quotemark": [
-      true,
-      "single",
-      "avoid-escape",
-      "avoid-template",
-      "jsx-double"
-    ],
+    "quotemark": [true, "single", "avoid-escape", "avoid-template", "jsx-double"],
     "only-arrow-functions": false,
     "no-console": false,
     "interface-name": false,
@@ -18,13 +12,7 @@
     "trailing-comma": false
   },
   "rules": {
-    "quotemark": [
-      true,
-      "single",
-      "avoid-escape",
-      "avoid-template",
-      "jsx-double"
-    ],
+    "quotemark": [true, "single", "avoid-escape", "avoid-template", "jsx-double"],
     "only-arrow-functions": false,
     "no-console": false,
     "interface-name": false,

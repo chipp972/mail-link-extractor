@@ -1,5 +1,5 @@
 import { Model } from 'mongoose';
-import initUserModel from './user_model';
+import { initUserModel } from './user_model';
 import { User, UserData, UserManager } from './user_typedef';
 
 export function initUserManager(lib: Lib): UserManager {

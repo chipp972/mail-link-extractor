@@ -1,6 +1,12 @@
 {
+  "parser": "babel-eslint",
   "extends": [ "airbnb" ],
-  "plugins": [ "jest" ],
+  "plugins": [ "jest", "react" ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
   "env": {
     "jest": true,
     "browser": true,

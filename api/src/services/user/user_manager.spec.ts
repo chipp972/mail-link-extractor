@@ -1,15 +1,16 @@
-jest.mock('./user_model');
-import initUserModel from './user_model';
-initUserModel.mockImplementation(() => ({
-  create: (data: any) => data,
-  findById: (id: string) => id,
-  findByIdAndUpdate: (_, data: any) => data,
-  findByIdAndRemove: (id: string) => id,
+jest.mock('./user_model', () => ({
+  initUserModel: () => ({
+    create: (data: any) => data,
+    findById: (id: string) => id,
+    findByIdAndUpdate: (_: any, data: any) => data,
+    findByIdAndRemove: (id: string) => id,
+  }),
 }));
+
 import { initUserManager } from './user_manager';
 
 describe('User manager', () => {
-  const userManager = initUserManager({ db: {} });
+  const userManager = initUserManager({ db: { model: jest.fn() } });
 
   it('should be able to create an user', async () => {
     const user = await userManager.create({ email: 'test@gmail.com' });
