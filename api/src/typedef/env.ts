@@ -3,7 +3,6 @@ export interface Env {
     mongodbUri: string;
     mongoPoolSize: number;
   };
-  isDebug: boolean;
   express: {
     sessionSecret: string;
   };
@@ -22,6 +21,7 @@ export interface Env {
     consumer_key: string;
     redirect_uri: string;
   };
-  hostname: string;
   port: number;
+  apiOrigin: string;
+  devFrontOrigin: string;
 }

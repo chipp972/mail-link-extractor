@@ -3,15 +3,15 @@ import Link from 'next/link';
 import Head from '../components/head';
 import GoogleAuth from '../components/google-auth';
 import PocketAuth, { testPocketAuth } from '../components/pocket-auth';
-import { retrieveState, updateState } from '../utils/persistence';
+import { initStore, retrieveState, updateState } from '../lib/persistence';
 
 export default class Home extends React.Component {
-  static async getInitialProps({ pathname, asPath, jsonPageRes, req, res, err }) {
-    console.log(pathname, asPath, jsonPageRes, res, err, req);
-    // const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
-    // return { userAgent };
-    return { test: 'test' };
-  }
+  // static async getInitialProps({ pathname, asPath, jsonPageRes, req, res, err }) {
+  // console.log(pathname, asPath, jsonPageRes, res, err, req);
+  // const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
+  // return { userAgent };
+  // return { test: 'test' };
+  // }
 
   constructor(props) {
     super(props);
@@ -34,8 +34,7 @@ export default class Home extends React.Component {
     this.onPocketLogin = this.onPocketLogin.bind(this);
     this.onPocketLogout = this.onPocketLogout.bind(this);
     this.onError = this.onError.bind(this);
-    this.hydrate();
-    console.log(props);
+    initStore().then(() => this.hydrate());
   }
 
   onGoogleLogin({ _id, email, expiryDate }) {
@@ -85,10 +84,11 @@ export default class Home extends React.Component {
   }
 
   onError({ error }) {
+    console.error(error);
     this.setState({ error });
   }
 
-  hydrate() {
+  async hydrate() {
     retrieveState()
       .then((state) => this.setState(state))
       .then(() => {
@@ -97,7 +97,8 @@ export default class Home extends React.Component {
           return;
         }
         testPocketAuth(this.onPocketLogin, this.onError)(pocketRequestId);
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   render() {

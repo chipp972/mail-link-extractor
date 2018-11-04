@@ -6,9 +6,13 @@ export const googleAccountRoutes = (lib: Lib, services: Services): HandlerObject
     method: 'post',
     url: '/api/google/sendcode',
     handler: async (req: any, res: any, next: NextFunction) => {
-      // TODO: put this in security
-      if (!req.headers['x-requested-with']) {
+      if (!req.xhr) {
         return next(new Error('Potential security risk'));
+      }
+      const { code } = req.body;
+      if (!code) {
+        res.result = { status: 400 };
+        return next(new Error('Missing needed parameter in body : code'));
       }
 
       try {
@@ -18,12 +22,13 @@ export const googleAccountRoutes = (lib: Lib, services: Services): HandlerObject
         if (!currentUser) {
           return next(new Error('Not a valid user'));
         }
+        console.log(currentUser);
         const account = await services.googleAccount.createAccount({
           user: currentUser,
-          code: req.body.code,
+          code,
         });
         lib.logger.debug(account);
-        res.result = { account };
+        res.result = { data: account };
         return next();
       } catch (err) {
         return next(err);

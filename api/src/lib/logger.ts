@@ -1,18 +1,18 @@
 import { createLogger, format, Logger, transports } from 'winston';
 
 interface Props {
-  isDebug: boolean;
+  isDev: boolean;
 }
 
-export function initLogger({ isDebug }: Props) {
+export function initLogger({ isDev }: Props) {
   const loggerFormat = [
-    isDebug ? format.uncolorize() : format.colorize(),
+    isDev ? format.colorize() : format.uncolorize(),
     format.timestamp(),
-    isDebug ? format.json() : format.cli(),
+    isDev ? format.cli() : format.json(),
   ];
   const console = new transports.Console({
     handleExceptions: true,
-    level: isDebug ? 'debug' : 'info',
+    level: isDev ? 'debug' : 'info',
     format: format.combine(...loggerFormat),
   });
   const logger: Logger = createLogger({ exitOnError: true });

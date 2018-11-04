@@ -21,7 +21,7 @@ module.exports = {
   collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  collectCoverageFrom: ['<rootDir>/components/**/*', '<rootDir>/pages/**/*', '<rootDir>/utils/**/*'],
+  collectCoverageFrom: ['<rootDir>/components/**/*', '<rootDir>/pages/**/*'],
 
   // The directory where Jest should output its coverage files
   coverageDirectory: '.coverage',
@@ -63,7 +63,7 @@ module.exports = {
   // globals: {},
 
   // An array of directory names to be searched recursively up from the requiring module's location
-  moduleDirectories: ['node_modules', 'components', 'pages', 'utils'],
+  moduleDirectories: ['node_modules', 'components', 'pages', 'lib'],
 
   // An array of file extensions your modules use
   moduleFileExtensions: ['ts', 'js', 'json'],
@@ -105,7 +105,7 @@ module.exports = {
   rootDir: '.',
 
   // A list of paths to directories that Jest should use to search for files in
-  roots: ['<rootDir>', '<rootDir>/components/', '<rootDir>/pages/', '<rootDir>/utils/'],
+  roots: ['<rootDir>', '<rootDir>/components/', '<rootDir>/pages/', '<rootDir>/lib/'],
 
   // Allows you to use a custom runner instead of Jest's default test runner
   // runner: "jest-runner",

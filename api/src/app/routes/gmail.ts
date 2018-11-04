@@ -6,7 +6,7 @@ export const gmailRoutes = (services: Services): HandlerObject[] => [
     method: 'post',
     url: '/api/gmail/extract-links',
     handler: async (req: any, res: any, next: NextFunction) => {
-      if (!req.headers['x-requested-with']) {
+      if (!req.xhr) {
         return next(new Error('Potential security risk'));
       }
 
@@ -22,7 +22,7 @@ export const gmailRoutes = (services: Services): HandlerObject[] => [
           user: currentUser,
           code: req.body.code,
         });
-        res.result = { account };
+        res.result = { data: account };
         return next();
       } catch (err) {
         return next(err);

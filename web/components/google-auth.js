@@ -1,27 +1,19 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
-import fetch from 'isomorphic-unfetch';
+import { apiPost } from '../lib/ajax';
 
-const clientId = '859423039820-u47j4gvndea3pn0v8hp8met8veljgfcb.apps.googleusercontent.com';
-
-const scopes = [
-  'https://www.googleapis.com/auth/gmail.labels',
-  'https://www.googleapis.com/auth/gmail.modify',
-  'https://www.googleapis.com/auth/userinfo.email',
-  'https://www.googleapis.com/auth/userinfo.profile',
-];
+const clientId = process.env.GOOGLE_CLIENT_ID;
+const scopes = (process.env.GOOGLE_SCOPES || '')
+  .split(',')
+  .map((scope) => `${process.env.GOOGLE_SCOPE_ORIGIN}${scope}`)
+  .join(' ');
 
 const onSuccess = (successCallback, errorCallback) => ({ code }) => {
-  fetch('/api/google/sendcode', {
-    method: 'POST',
-    // Always include an `X-Requested-With` header in every AJAX request,
-    // to protect against CSRF attacks.
-    headers: {
-      'X-Requested-With': 'XMLHttpRequest',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ code }),
+  console.log(code);
+  apiPost({
+    url: '/api/google/sendcode',
+    body: { code },
   })
     .then((raw) => raw.json())
     .then(({ success, data }) => (success ? successCallback(data) : data))
@@ -42,7 +34,7 @@ const googleAuth = ({ isLoggedIn, email, onLogin, onLogout, onError }) =>
       clientId={clientId}
       responseType="code"
       accessType="offline"
-      scope={scopes.join(' ')}
+      scope={scopes}
       buttonText="Login"
       onSuccess={onSuccess(onLogin, onError)}
       onFailure={onError}
@@ -50,8 +42,8 @@ const googleAuth = ({ isLoggedIn, email, onLogin, onLogout, onError }) =>
   );
 
 googleAuth.defaultProps = {
-  onLogout: (arg) => console.log(arg),
-  onError: (err) => console.log(err),
+  onLogout: (arg) => console.table(arg),
+  onError: (err) => console.error(err),
 };
 
 googleAuth.propTypes = {

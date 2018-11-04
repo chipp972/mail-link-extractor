@@ -5,18 +5,19 @@ import responseTimeMiddleware from 'response-time';
 import { Env, RouterObject } from '../typedef';
 
 export function getMiddlewares(env: Env): RouterObject[] {
-  const mw: any[] = [
-    responseTimeMiddleware(),
+  const base: any[] = [responseTimeMiddleware(), express.json(), express.urlencoded({ extended: true })];
+
+  const devOnly: any[] = [
     cors({
-      origin: `${env.hostname}:${env.port}`,
+      origin: env.devFrontOrigin,
       optionsSuccessStatus: 200,
     }),
-    express.json(),
-    express.urlencoded({ extended: true }),
-    express.static(join(__dirname, '../static')),
-  ].map((router) => ({ router }));
+  ];
 
-  return mw;
+  const prodOnly: any[] = [express.static(join(__dirname, '../static'))];
+
+  const mw = env.isProd ? [...base, ...prodOnly] : [...base, ...devOnly];
+  return mw.map((router) => ({ router }));
 }
 
 export default getMiddlewares;

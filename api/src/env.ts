@@ -19,13 +19,13 @@ const env: Env = {
   },
   isProd: process.env.NODE_ENV === 'production',
   isDev: process.env.NODE_ENV === 'development',
-  isDebug: process.env.DEBUG === '1' || false,
   pocket: {
     consumer_key: process.env.POCKET_CONSUMER_KEY || '',
     redirect_uri: process.env.POCKET_REDIRECT_URL || '',
   },
-  hostname: process.env.ORIGIN || 'http://localhost',
   port: parseInt(process.env.PORT || '5000', 10),
+  apiOrigin: process.env.API_ORIGIN || 'http://localhost:5000',
+  devFrontOrigin: process.env.DEV_FRONT_ORIGIN || 'http://localhost:3000',
 };
 
 export default env;

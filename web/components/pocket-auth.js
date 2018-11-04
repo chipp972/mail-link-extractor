@@ -1,17 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import fetch from 'isomorphic-unfetch';
+import { apiGet, apiPost } from '../lib/ajax';
 
 export const testPocketAuth = (successCb, errorCb) => (pocketRequestId) => {
-  fetch(`/api/pocket/user-from-request/${pocketRequestId}`, {
-    method: 'GET',
-    // Always include an `X-Requested-With` header in every AJAX request,
-    // to protect against CSRF attacks.
-    headers: {
-      'X-Requested-With': 'XMLHttpRequest',
-      'Content-Type': 'application/json',
-    },
-  })
+  apiGet(`/api/pocket/user-from-request/${pocketRequestId}`)
     .then((raw) => raw.json())
     .then(({ success, data }) => (success ? successCb(data) : data))
     .catch((err) => errorCb(err));
@@ -19,15 +11,7 @@ export const testPocketAuth = (successCb, errorCb) => (pocketRequestId) => {
 
 const pocketAuthRedirect = (successCallback, errorCallback) => (e) => {
   e.preventDefault();
-  fetch('http://localhost:5000/api/pocket/authorize-url', {
-    method: 'GET',
-    // Always include an `X-Requested-With` header in every AJAX request,
-    // to protect against CSRF attacks.
-    headers: {
-      'X-Requested-With': 'XMLHttpRequest',
-      'Content-Type': 'application/json',
-    },
-  })
+  apiGet('/api/pocket/authorize-url')
     .then((raw) => raw.json())
     .then(({ success, data }) => {
       if (!success) {
@@ -46,15 +30,9 @@ const pocketAuthRedirect = (successCallback, errorCallback) => (e) => {
 
 const logout = (onLogout, onError) => (e) => {
   e.preventDefault();
-  fetch('http://localhost:5000/api/pocket/logout', {
-    method: 'POST',
-    // Always include an `X-Requested-With` header in every AJAX request,
-    // to protect against CSRF attacks.
-    headers: {
-      'X-Requested-With': 'XMLHttpRequest',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ data: 'gh' }),
+  apiPost({
+    url: '/api/pocket/logout',
+    body: { data: 'test' },
   })
     .then(onLogout)
     .catch(onError);

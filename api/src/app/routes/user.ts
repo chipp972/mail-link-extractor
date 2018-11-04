@@ -12,7 +12,7 @@ export const userCrudRoutes = (services: Services): HandlerObject[] => [
         if (!user) {
           return next(new Error(`No user found with id ${userId}`));
         }
-        res.result = user;
+        res.result = { data: user };
         return next();
       } catch (err) {
         return next(err);
@@ -30,7 +30,7 @@ export const userCrudRoutes = (services: Services): HandlerObject[] => [
         if (!user) {
           return next(new Error(`No user found with id ${userId}`));
         }
-        res.result = user;
+        res.result = { data: user };
         return next();
       } catch (err) {
         return next(err);
@@ -45,7 +45,7 @@ export const userCrudRoutes = (services: Services): HandlerObject[] => [
       try {
         const userData = req.body;
         const user = await services.user.create(userData);
-        res.result = user;
+        res.result = { status: 201, data: user };
         return next();
       } catch (err) {
         return next(err);
@@ -63,7 +63,7 @@ export const userCrudRoutes = (services: Services): HandlerObject[] => [
         if (!user) {
           return next(new Error(`No user found with id ${userId}`));
         }
-        res.result = user;
+        res.result = { status: 203, data: user };
         return next();
       } catch (err) {
         return next(err);

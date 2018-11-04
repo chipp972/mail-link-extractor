@@ -3,7 +3,7 @@ import { Logger } from 'winston';
 import { Env } from '../typedef';
 
 export async function initMongoose(env: Env, logger: Logger): Promise<Connection> {
-  mongoose.set('debug', env.isDebug);
+  mongoose.set('debug', env.isDev);
 
   const options: ConnectionOptions = {
     promiseLibrary: global.Promise,
