@@ -8,6 +8,7 @@
   },
   "main": ".dist/src/index",
   "scripts": {
+    "postinstall": "npm i --prefix ./web && npm i --prefix ./api",
     "clean": "rm -rf .dist/",
     "format": "prettier --write '{api,web,worker}/**/*.{ts,js}'",
     "build:front": "npm run build --prefix ./web && npm run export ../.dist/static --prefix ./web",
