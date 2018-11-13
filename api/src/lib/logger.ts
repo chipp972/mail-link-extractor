@@ -1,22 +1,19 @@
 import { createLogger, format, Logger, transports } from 'winston';
+import { Env } from '../typedef';
 
-interface Props {
-  isDev: boolean;
-}
-
-export function initLogger({ isDev }: Props) {
+export function initLogger({ logger: { level, hasColor, isJSONFormat } }: Env) {
   const loggerFormat = [
-    isDev ? format.colorize() : format.uncolorize(),
+    hasColor ? format.colorize() : format.uncolorize(),
     format.timestamp(),
-    isDev ? format.cli() : format.json(),
+    isJSONFormat ? format.json() : format.cli(),
   ];
-  const console = new transports.Console({
+  const consoleLogger = new transports.Console({
     handleExceptions: true,
-    level: isDev ? 'debug' : 'info',
+    level,
     format: format.combine(...loggerFormat),
   });
   const logger: Logger = createLogger({ exitOnError: true });
-  logger.add(console);
+  logger.add(consoleLogger);
   return logger;
 }
 

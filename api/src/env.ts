@@ -26,6 +26,11 @@ const env: Env = {
   port: parseInt(process.env.PORT || '5000', 10),
   apiOrigin: process.env.API_ORIGIN || 'http://localhost:5000',
   devFrontOrigin: process.env.DEV_FRONT_ORIGIN || 'http://localhost:3000',
+  logger: {
+    level: process.env.LOG_LEVEL || 'info',
+    isJSONFormat: process.env.LOG_IS_JSON !== '0',
+    hasColor: process.env.LOG_HAS_COLOR === '1',
+  },
 };
 
 export default env;

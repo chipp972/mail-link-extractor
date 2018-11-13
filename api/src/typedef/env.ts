@@ -24,4 +24,9 @@ export interface Env {
   port: number;
   apiOrigin: string;
   devFrontOrigin: string;
+  logger: {
+    level: string;
+    isJSONFormat: boolean;
+    hasColor: boolean;
+  };
 }
