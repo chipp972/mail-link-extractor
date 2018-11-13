@@ -13,7 +13,12 @@ export interface MessageListParams {
   pageToken?: string;
 }
 
-export const getMessageList = async ({ auth, q = '*', maxResults, pageToken }: MessageListParams) => {
+export const getMessageList = async ({
+  auth,
+  q = '*',
+  maxResults,
+  pageToken,
+}: MessageListParams) => {
   try {
     const { data } = await gmail.users.messages.list({
       userId: 'me',
@@ -25,7 +30,7 @@ export const getMessageList = async ({ auth, q = '*', maxResults, pageToken }: M
     const getGmailMessage = getMessage(auth);
     const messages = data.messages || [];
     const messagesData = await Promise.all(
-      messages.map(({ id }) => (id ? getGmailMessage(id) : Promise.resolve(undefined))),
+      messages.map(({ id }) => (id ? getGmailMessage(id) : Promise.resolve(undefined)))
     );
     return messagesData;
   } catch (err) {

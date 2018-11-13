@@ -37,5 +37,8 @@ const addLabelsToMessage = (auth: OAuth2Client, labels: string[]) => (messageId:
 /**
  * Add labels to a list of messages
  */
-export const addLabelsToMessageList = (auth: OAuth2Client, messageIdList: string[], labels: string[]) =>
-  Promise.all(messageIdList.map(addLabelsToMessage(auth, labels)));
+export const addLabelsToMessageList = (
+  auth: OAuth2Client,
+  messageIdList: string[],
+  labels: string[]
+) => Promise.all(messageIdList.map(addLabelsToMessage(auth, labels)));

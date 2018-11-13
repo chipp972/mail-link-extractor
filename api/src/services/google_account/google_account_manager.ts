@@ -21,7 +21,13 @@ export function initGoogleAccountManager(env: Env, lib: Lib): GoogleAccountManag
     }
   };
 
-  const createAccount = async ({ user, code }: { user: User; code: string }): Promise<GoogleAccount> => {
+  const createAccount = async ({
+    user,
+    code,
+  }: {
+    user: User;
+    code: string;
+  }): Promise<GoogleAccount> => {
     try {
       const { tokens } = await getAccessToken(lib, code);
       const profile = await getProfile(lib, tokens);

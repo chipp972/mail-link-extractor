@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { apiGet, apiPost } from '../lib/ajax';
+import { apiGet, apiPost, urls } from '../lib/ajax';
 
 export const testPocketAuth = (successCb, errorCb) => (pocketRequestId) => {
-  apiGet(`/api/pocket/user-from-request/${pocketRequestId}`)
+  apiGet(`${urls.pocket.userFromRequest}${pocketRequestId}`)
     .then((raw) => raw.json())
     .then(({ success, data }) => (success ? successCb(data) : data))
     .catch((err) => errorCb(err));
@@ -11,7 +11,7 @@ export const testPocketAuth = (successCb, errorCb) => (pocketRequestId) => {
 
 const pocketAuthRedirect = (successCallback, errorCallback) => (e) => {
   e.preventDefault();
-  apiGet('/api/pocket/authorize-url')
+  apiGet(urls.pocket.authorizeUrl)
     .then((raw) => raw.json())
     .then(({ success, data }) => {
       if (!success) {
@@ -31,7 +31,7 @@ const pocketAuthRedirect = (successCallback, errorCallback) => (e) => {
 const logout = (onLogout, onError) => (e) => {
   e.preventDefault();
   apiPost({
-    url: '/api/pocket/logout',
+    url: urls.pocket.logout,
     body: { data: 'test' },
   })
     .then(onLogout)

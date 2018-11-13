@@ -5,7 +5,11 @@ import responseTimeMiddleware from 'response-time';
 import { Env, RouterObject } from '../typedef';
 
 export function getMiddlewares(env: Env): RouterObject[] {
-  const base: any[] = [responseTimeMiddleware(), express.json(), express.urlencoded({ extended: true })];
+  const base: any[] = [
+    responseTimeMiddleware(),
+    express.json(),
+    express.urlencoded({ extended: true }),
+  ];
 
   const devOnly: any[] = [
     cors({

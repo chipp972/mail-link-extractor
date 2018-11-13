@@ -13,12 +13,21 @@
     "es6": true
   },
   "rules": {
+    "max-len": ["warn", { "code": 120 }],
     "react/jsx-filename-extension": "off",
     "no-confusing-arrow": "off",
     "implicit-arrow-linebreak": "off",
     "object-curly-newline": "off",
     "arrow-parens": ["error", "always"],
     "react/jsx-closing-bracket-location": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "camelcase": "warn",
+    "comma-dangle": ["error", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "always-multiline",
+      "exports": "always-multiline",
+      "functions": "never"
+    }]
   }
 }

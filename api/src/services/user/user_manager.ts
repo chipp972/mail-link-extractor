@@ -7,7 +7,8 @@ export function initUserManager(lib: Lib): UserManager {
   return {
     create: async (data: UserData) => await UserModel.create(data),
     read: async (id: string) => await UserModel.findById(id),
-    update: async (id: string, data: Partial<UserData>) => await UserModel.findByIdAndUpdate(id, data),
+    update: async (id: string, data: Partial<UserData>) =>
+      await UserModel.findByIdAndUpdate(id, data),
     delete: async (id: string) => await UserModel.findByIdAndRemove(id),
   };
 }

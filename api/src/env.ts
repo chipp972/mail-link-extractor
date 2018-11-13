@@ -13,7 +13,8 @@ const env: Env = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
       clientId: process.env.GOOGLE_CLIENT_ID || '',
       redirectUrl: process.env.GOOGLE_REDIRECT_URL || 'postmessage',
-      tokenRevokationUrl: process.env.GOOGLE_REVOKATION_URL || 'https://accounts.google.com/o/oauth2/revoke',
+      tokenRevokationUrl:
+        process.env.GOOGLE_REVOKATION_URL || 'https://accounts.google.com/o/oauth2/revoke',
       tokenUrl: process.env.GOOGLE_TOKEN_URL || 'https://www.googleapis.com/oauth2/v4/token',
     },
   },

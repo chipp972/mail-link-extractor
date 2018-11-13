@@ -1,5 +1,16 @@
 import fetch from 'isomorphic-unfetch';
 
+export const urls = {
+  google: {
+    sendCode: '/api/google/sendcode',
+  },
+  pocket: {
+    logout: '/api/pocket/logout',
+    userFromRequest: '/api/pocket/user-from-request/',
+    authorizeUrl: '/api/pocket/authorize-url',
+  },
+};
+
 // Always include an `X-Requested-With` header in every AJAX request,
 // to protect against CSRF attacks.
 const defaultHeaders = {

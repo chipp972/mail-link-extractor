@@ -22,7 +22,7 @@ export const googleAccountRoutes = (lib: Lib, services: Services): HandlerObject
         if (!currentUser) {
           return next(new Error('Not a valid user'));
         }
-        console.log(currentUser);
+        lib.logger.debug(currentUser);
         const account = await services.googleAccount.createAccount({
           user: currentUser,
           code,

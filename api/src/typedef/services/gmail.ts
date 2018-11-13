@@ -58,6 +58,14 @@ export interface GmailLabel {
 }
 
 export interface GmailManager {
-  getMessagesLinks: (googleAccount: GoogleAccount, query?: string, maxResults?: number) => Promise<string[]>;
-  addLabelsToMessages: (googleAccount: GoogleAccount, messageIds: string[], labels: string[]) => Promise<any>;
+  getMessagesLinks: (
+    googleAccount: GoogleAccount,
+    query?: string,
+    maxResults?: number
+  ) => Promise<string[]>;
+  addLabelsToMessages: (
+    googleAccount: GoogleAccount,
+    messageIds: string[],
+    labels: string[]
+  ) => Promise<any>;
 }

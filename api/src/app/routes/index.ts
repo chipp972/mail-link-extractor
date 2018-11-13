@@ -4,5 +4,9 @@ import { googleAccountRoutes } from './google_account';
 import { userCrudRoutes } from './user';
 
 export default function getRoutes(lib: Lib, services: Services): HandlerObject[] {
-  return [...userCrudRoutes(services), ...googleAccountRoutes(lib, services), ...gmailRoutes(services)];
+  return [
+    ...userCrudRoutes(services),
+    ...googleAccountRoutes(lib, services),
+    ...gmailRoutes(services),
+  ];
 }
