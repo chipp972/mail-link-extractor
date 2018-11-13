@@ -1,5 +1,7 @@
 {
   "presets": [
-    "@babel/preset-env", "@babel/preset-react", "next/babel"
+    ["@babel/preset-env", {
+      "useBuiltIns": "usage"
+    }], "@babel/preset-react", "next/babel"
   ]
 }
