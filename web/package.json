@@ -11,6 +11,7 @@
     "start": "next start",
     "export": "next export -o",
     "test": "jest",
+    "test:ci": "jest --maxWorkers=2",
     "test:watch": "jest --watch"
   },
   "dependencies": {

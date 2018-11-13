@@ -18,8 +18,9 @@
     "prestart": "if [ -n '.dist' ]; then npm run build; else echo 'Already built'; fi",
     "start": "nf start app",
     "test:all": "npm t --prefix ./web && npm t --prefix ./api",
-    "pretest": "npm run test:all",
-    "test": "lcov-result-merger '*/.coverage/lcov.info' | codacy-coverage",
+    "test:ci": "npm run test:ci --prefix ./web && npm run test:ci --prefix ./api",
+    "test": "npm run test:all",
+    "posttest:ci": "lcov-result-merger '*/.coverage/lcov.info' | codacy-coverage",
     "prerelease": "npm run build && npm run test:all",
     "release": "standard-version"
   },

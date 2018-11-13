@@ -8,6 +8,7 @@
     "build": "tsc --project tsconfig.json --pretty",
     "build:watch": "tsc --watch",
     "test": "jest",
+    "test:ci": "jest --maxWorkers=2",
     "test:watch": "jest --watch",
     "dev": "env $(cat ../.env) NODE_ENV=development nodemon"
   },
